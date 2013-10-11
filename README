@@ -1,7 +1,5 @@
-Project Navoh 2.0 alfa
+Simple test program that finds the lines on the image by LSD library and draws the result with OpenCV
 
-Dependencies:
-    OpenCV 2.4.6.1
-        Arch Linux: sudo pacman -S opencv
-        Mac OSX: sudo port install opencv
+Usage:
 
+	./test <image name>
