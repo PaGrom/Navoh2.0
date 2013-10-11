@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall `pkg-config --cflags opencv`
 LDFLAGS=
-SOURCES=navoh.cpp
+SOURCES=main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=navoh
 
