@@ -1,0 +1,7 @@
+Project Navoh 2.0 alfa
+
+Dependencies:
+    OpenCV 2.4.6.1
+        Arch Linux: sudo pacman -S opencv
+        Mac OSX: sudo port install opencv
+
