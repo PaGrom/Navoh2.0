@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 		
 		printf("[i] image: %s\n", filename);
 		
-		if(!image)
+		if((!image)||(filename==""))
 		{
 			printf("Error: can`t load %s\n",filename);
 			return -1;

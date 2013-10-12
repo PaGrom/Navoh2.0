@@ -1,0 +1,11 @@
+test
+
+Simple test program that finds the lines on the image by LSD library and draws the result with OpenCV
+
+Usage:
+
+	./test <image name>
+
+test_webcam
+
+Recognises rectangles in the frames captured from webcam and paints those lines in red. It uses functions and classes from pratice2013, containing rectangle-finding algorithm and usage of LSD lidrary. Coordinates of points of the lines must fit in Delta to make a connection. Delta can be chosen manually. It has a memory leak at some point, i don`t know where at this moment :)
