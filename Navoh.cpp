@@ -13,3 +13,8 @@ void Navoh::load(std::string imageName) {
   if (!image)
     throw openImageException();
 }
+
+void Navoh::displayImage() {
+  cvNamedWindow("Navoh");
+  cvShowImage("Image", image);
+}
