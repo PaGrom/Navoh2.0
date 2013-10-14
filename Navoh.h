@@ -13,7 +13,7 @@ private:
 public:
   Navoh();
   ~Navoh();
-  void load(std::string imageName);
+  void loadImageFromFile(std::string imageName);
   void loadImageFromCam(int devNumber);
   void displayImage();
 };

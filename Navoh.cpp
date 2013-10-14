@@ -8,7 +8,7 @@ Navoh::~Navoh() {
 
 }
 
-void Navoh::load(std::string imageName) {
+void Navoh::loadImageFromFile(std::string imageName) {
   image = cvLoadImage(imageName.c_str(), 1);
   if (!image) {
     throw openImageException();
