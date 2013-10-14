@@ -1,22 +1,23 @@
 #include "histogram.h"
 
-void Histogram::calculate(Mat img){
+Histogram::Histogram(){
+  int hist_size[]={256,256,256};
+  float range1[]= {0,255};
+  float range2[]= {0,255};
+  float range3[]= {0,255};
+  float* ranges[]= {range1,range2,range3};
+  hist= cvCreateHist(3,hist_size,CV_HIST_ARRAY,ranges,1);
+}
 
-	vector<Mat> rgb_plane;
-	split(img,rgb_plane);
-	float range[]={0,256};
-	const float* histRange = {range};
-	int size = HISTSIZE;
+void Histogram::calculate(IplImage **img){
 
-	calcHist(&rgb_plane[2],1,0,Mat(),hist[2],1,&size,&histRange,true, false);
-	calcHist(&rgb_plane[1],1,0,Mat(),hist[1],1,&size,&histRange,true, false);
-	calcHist(&rgb_plane[0],1,0,Mat(),hist[0],1,&size,&histRange,true, false);
+cvCalcHist(img,hist,0,0);
 
 }
 
-Mat* Histogram::getHistograms(){
+CvHistogram* Histogram::getHistogram(){
 
-	return hist;
+  return hist;
 }
 
 bool operator==(const Histogram& left, const Histogram& right) {
