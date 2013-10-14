@@ -21,8 +21,5 @@ CvHistogram* Histogram::getHistogram(){
 }
 
 bool operator==(const Histogram& left, const Histogram& right) {
-bool check=  false;
-
-
-return check;
+  return (cvCompareHistt(left.hist,right.hist,CV_COMP_BHATTACHARYYA)<0.1);
 }
