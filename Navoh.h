@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cv.h>
 #include <highgui.h>
+#include "exception.h"
 
 class Navoh {
 private:
