@@ -103,17 +103,20 @@ int main(int argc, char* argv[])
 			
 			for(i=0;i<lcnt;i++)
 			{
-					/*
+					
 					cvLine(frame, cvPoint((int)output[7*i],(int)output[7*i+1]), //starting point
 								cvPoint((int)output[7*i+2], (int)output[7*i+3]), //ending point
 							CV_RGB(0,255,0), //color of the lines
-							(int)output[7*i+4], //thickness
+							(int)output[7*i+4], //width
 							8, 0 ); 
-					*/
+					
 					
 					//printf("%.2f ",output[i]);
 					
-					lines.setat(new TLine(output[7*i+0],output[7*i+1],output[7*i+2],output[7*i+3]),k);
+					lines.setat(new TLine(output[7*i+0],output[7*i+1],output[7*i+2],output[7*i+3], //coordinates
+											output[7*i+4], //width
+											output[7*i+5]*180 //degree
+											),k);
 					
 					k++;
 			}

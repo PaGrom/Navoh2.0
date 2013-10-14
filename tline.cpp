@@ -32,6 +32,14 @@ TLine::TLine(int ix1, int iy1, int ix2, int iy2)
 	p2.setxy(ix2, iy2);
 }
 
+TLine::TLine(int ix1, int iy1, int ix2, int iy2, float new_degree, float new_width)
+{
+	p1.setxy(ix1, iy1);
+	p2.setxy(ix2, iy2);
+	set_degree(new_degree);
+	set_width(new_width);
+}
+
 
 TLine::~TLine(void)
 {
@@ -65,3 +73,23 @@ void TLine::shift(int dx,int dy)
 	p1.shift(dx,dy);
 	p2.shift(dx,dy);
 }
+
+float TLine::get_degree()
+{
+	return degree;
+}
+float TLine::get_width()
+{
+	return width;
+}
+
+void TLine::set_degree(float value)
+{
+	degree=value;
+}
+
+void TLine::set_width(float value)
+{
+	width=value;
+}
+
