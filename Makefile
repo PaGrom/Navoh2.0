@@ -1,17 +1,23 @@
-CC=g++
-CFLAGS=-c -Wall `pkg-config --cflags opencv`
-LDFLAGS=
-SOURCES=main.cpp
-OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=navoh
+CXX=g++
+CXXFLAGS = `pkg-config --cflags opencv` -O0 -g3 -Wall -c
+LIBS = `pkg-config --libs opencv`
 
-all: $(SOURCES) $(EXECUTABLE)
-	
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+EXECUTABLE = navoh
+COMMON_SOURCES = main.cpp Navoh.cpp
+COMMON_OBJECTS = main.o Navoh.o
 
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+.PHONY: all navoh
+
+all: navoh
+
+navoh: $(EXECUTABLE)
+ 
+$(EXECUTABLE): $(COMMON_OBJECTS)
+	$(CXX) -o $@ $(COMMON_OBJECTS) $(LIBS)
 
 clean:
-	rm -rf *.o $(EXECUTABLE)
+	rm -rf $(EXECUTABLE) $(COMMON_OBJECTS)
+ 
+%.o: %.cpp
+	$(CXX) -c $< $(CXXFLAGS)
+ 
