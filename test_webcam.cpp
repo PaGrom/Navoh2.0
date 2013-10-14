@@ -101,7 +101,8 @@ int main(int argc, char* argv[])
 							CV_RGB(0,255,0), //color of the lines
 							(int)output[7*i+4], //thickness
 							8, 0 ); 
-					*/
+							*/
+					
 					//printf("%.2f ",output[i]);
 					
 					lines.setat(new TLine(output[7*i+0],output[7*i+1],output[7*i+2],output[7*i+3]),k);
@@ -109,11 +110,12 @@ int main(int argc, char* argv[])
 					k++;
 			}
 			
-		
+			
 			rectangles.deleteall();
 			calcRectangles(&lines, &rectangles);
 			
 			//drawing rectangles
+			
 			for(i=0;i<rectangles.length();i++)
 			{
 				for(k=0;k<4;k++)
@@ -125,6 +127,7 @@ int main(int argc, char* argv[])
 							4, //thickness
 							8, 0 ); 
 			}
+			
 			
 			//printf("Rect found: %d\n",rectangles.length());
 			// используя шрифт выводим на картинку текст
