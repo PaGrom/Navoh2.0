@@ -159,3 +159,74 @@ void showRectangles(TSafeVector *recsq)
 		printf("\n");
 	}
 }
+
+void mergeLines(TSafeVector *original, TSafeVector *merged, int distance)
+{
+	
+	double k, b; // y=kx+b
+	double xa, ya, xb, yb; //coordinates of line`s points
+	int x1, y1, x2, y2;
+	double kp, b1, b2;
+	double xc1, yc1, xc2, yc2;
+	
+	int count=0;
+	
+	bool small=false;
+	
+	int j;
+	
+	for(int i=0; i<(original->length()); i++)
+	{
+		
+		x1=((TLine*)(original->get(i)))->getp1()->getx();
+		y1=((TLine*)(original->get(i)))->getp1()->gety();
+		
+		x2=((TLine*)(original->get(i)))->getp2()->getx();
+		y2=((TLine*)(original->get(i)))->getp2()->gety();
+		
+		j=i+1;
+		
+		while((j<(original->length()))&&(!small))
+		{
+			small=false;
+			
+			xa=((TLine*)(original->get(j)))->getp1()->getx();
+			ya=((TLine*)(original->get(j)))->getp1()->gety();
+		
+			xb=((TLine*)(original->get(j)))->getp2()->getx();
+			yb=((TLine*)(original->get(j)))->getp2()->gety();
+		
+			k=(yb-ya)/(xb-xa);
+			b=ya-k*xa;
+		
+			kp=(-1)/k;
+		
+			b1=y1-kp*x1;
+			b2=y2-kp*x2;
+		
+			xc1=(b1-b)/(k-kp);
+			xc2=(b2-b)/(k-kp);
+		
+			yc1=k*xc1+b;
+			yc2=k*xc2+b;
+		
+			if((abs(xc1-xc2)<(xa-xb))&&(abs(yc1-yc2)<(ya-yb))&&
+				(((xc1-x1)*(xc1-x1)+(yc1-y1)*(yc1-y1))<(distance*distance))&&
+				(((xc2-x2)*(xc2-x2)+(yc2-y2)*(yc2-y2))<(distance*distance)))
+			{
+				small=true;
+			}
+			
+			j++;
+			
+		}
+		
+		if(!small)
+		{
+			merged->setat(new TLine(x1,y1,x2,y2),count);
+			count++;
+		}
+		
+	}
+}
+

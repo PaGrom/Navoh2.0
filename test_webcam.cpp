@@ -12,6 +12,13 @@ void TrackbarChangeDelta(int value) {
         change_delta(value);
 }
 
+int distance=10;
+
+void TrackbarChangeDistance(int value) {
+	if(value>=0)
+        distance=value;
+}
+
 int main(int argc, char* argv[])
 {
 		// получаем любую подключённую камеру
@@ -48,13 +55,13 @@ int main(int argc, char* argv[])
 		
 		int lcnt=0, i=0, k=0;
 		
-		TSafeVector lines, rectangles;
+		TSafeVector lines, merged, rectangles;
 		
 		int current_delta=5;
 		
 		CvFont font;
 		cvInitFont( &font, CV_FONT_HERSHEY_COMPLEX,0.7, 0.7, 0, 1, CV_AA);
-		char str[11];
+		char str[30];
 
 		while(true){
 			// получаем кадр
@@ -65,6 +72,7 @@ int main(int argc, char* argv[])
 			}
 			
 			cvCreateTrackbar("Delta", "capture", &current_delta, 30, TrackbarChangeDelta);
+			cvCreateTrackbar("Distance", "capture", &distance, 20, TrackbarChangeDistance);
 
 			cvCvtColor( frame, dst, CV_BGR2GRAY );
 			
@@ -92,7 +100,7 @@ int main(int argc, char* argv[])
 			lines.deleteall();
 			
 			//just drawing lines found by LSD
-
+			
 			for(i=0;i<lcnt;i++)
 			{
 					/*
@@ -101,7 +109,7 @@ int main(int argc, char* argv[])
 							CV_RGB(0,255,0), //color of the lines
 							(int)output[7*i+4], //thickness
 							8, 0 ); 
-							*/
+					*/
 					
 					//printf("%.2f ",output[i]);
 					
@@ -110,9 +118,24 @@ int main(int argc, char* argv[])
 					k++;
 			}
 			
+			merged.deleteall();
+			
+			mergeLines(&lines,&merged,10);
+			
+			/*
+			for(i=0;i<(merged.length());i++)
+			{
+				cvLine(frame, cvPoint(((TLine*)(merged.get(i)))->getp1()->getx(),((TLine*)(merged.get(i)))->getp1()->gety()), //starting point
+								cvPoint(((TLine*)(merged.get(i)))->getp2()->getx(),((TLine*)(merged.get(i)))->getp2()->gety()), //ending point
+							CV_RGB(0,255,0), //color of the lines
+							2, //thickness
+							8, 0 );
+			}
+			*/
 			
 			rectangles.deleteall();
-			calcRectangles(&lines, &rectangles);
+			//calcRectangles(&lines, &rectangles);
+			calcRectangles(&merged, &rectangles);
 			
 			//drawing rectangles
 			
