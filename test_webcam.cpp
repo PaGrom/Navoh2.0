@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
 {
 		// получаем любую подключённую камеру
 		CvCapture* capture = cvCreateCameraCapture(CV_CAP_ANY); //cvCaptureFromCAM( 0 );
+		//CvCapture* capture = cvCaptureFromCAM( 0 );
 		assert( capture );
 
 		//cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, 640);//1280); 
