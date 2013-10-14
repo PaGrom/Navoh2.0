@@ -3,14 +3,19 @@
 
 int main(int argc, char const *argv[]) {
   Navoh navoh;
-  try {
-    navoh.load(argv[1]);
-  }
-  catch (openImageException& e) {
-    std::cout << "openImageException caught: " << e.what() << std::endl;
-  }
+  // try {
+  //   navoh.load(argv[1]);
+  // }
+  // catch (openImageException& e) {
+  //   std::cout << "openImageException caught: " << e.what() << std::endl;
+  // }
   // navoh.displayImage();
-  navoh.loadImageFromCam(0);
+  try {
+    navoh.loadImageFromCam(0);
+  }
+  catch (captureCameraException& e) {
+    std::cout << "captureCameraException caught: " << e.what() << std::endl;
+  }
   navoh.displayImage();
   return 0;
 }

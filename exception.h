@@ -9,4 +9,10 @@ struct openImageException: public std::exception {
   }
 };
 
+struct captureCameraException: public std::exception {
+  const char* what() const throw() {
+    return "Could not capture the image from camera";
+  }
+};
+
 #endif
