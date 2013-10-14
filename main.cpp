@@ -9,7 +9,8 @@ int main(int argc, char const *argv[]) {
   catch (openImageException& e) {
     std::cout << "openImageException caught: " << e.what() << std::endl;
   }
+  // navoh.displayImage();
+  navoh.loadImageFromCam(0);
   navoh.displayImage();
-
   return 0;
 }

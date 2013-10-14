@@ -14,7 +14,13 @@ void Navoh::load(std::string imageName) {
     throw openImageException();
 }
 
+void Navoh::loadImageFromCam(int devNumber) {
+  CvCapture* capture = cvCaptureFromCAM(devNumber);
+  image = cvQueryFrame(capture);
+}
+
 void Navoh::displayImage() {
   cvNamedWindow("Navoh");
   cvShowImage("Image", image);
+  cvWaitKey();
 }

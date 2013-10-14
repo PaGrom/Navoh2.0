@@ -14,6 +14,7 @@ public:
   Navoh();
   ~Navoh();
   void load(std::string imageName);
+  void loadImageFromCam(int devNumber);
   void displayImage();
 };
 
