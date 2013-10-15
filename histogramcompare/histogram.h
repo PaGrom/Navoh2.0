@@ -17,7 +17,7 @@ private:
 public:
 Histogram();
 
-void calculate(IplImage** img);
+void calculate(IplImage* img);
 
 CvHistogram* getHistogram();
 

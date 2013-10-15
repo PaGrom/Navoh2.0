@@ -9,9 +9,18 @@ Histogram::Histogram(){
   hist= cvCreateHist(3,hist_size,CV_HIST_ARRAY,ranges,1);
 }
 
-void Histogram::calculate(IplImage **img){
-
-cvCalcHist(img,hist,0,0);
+void Histogram::calculate(IplImage *img){
+  
+  IplImage* rgb = cvCreateImage(cvGetSize(img), IPL_DEPTH_8U,3);
+  cvCvtColor(img,rgb,CV_BGR2HSV);
+  
+  IplImage* red   = cvCreateImage(cvGetSize(img),8,1);
+  IplImage* green = cvCreateImage(cvGetSize(img),8,1);
+  IplImage* blue  = cvCreateImage(cvGetSize(img),8,1);
+  cvCvtPixToPlane (rgb,blue,green,red,0);
+  IplImage* planes[]= {red, green, blue};
+  // size of planes given to hist as first parameter in cvCreateHist
+  cvCalcHist(planes,hist,0,0);
 
 }
 
