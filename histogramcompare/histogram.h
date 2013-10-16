@@ -15,13 +15,13 @@ private:
 
 
 public:
-Histogram();
+  Histogram();
 
-void calculate(IplImage* img);
+  void calculate(IplImage* img);
 
-CvHistogram* getHistogram();
+  CvHistogram* getHistogram();
 
-friend bool operator==(const Histogram& left, const Histogram& right);
+  friend bool operator==(const Histogram& left, const Histogram& right);
 
 
 };
