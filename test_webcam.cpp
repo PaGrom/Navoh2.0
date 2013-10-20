@@ -12,11 +12,56 @@ void TrackbarChangeDelta(int value) {
         change_delta(value);
 }
 
-int distance=10;
 
-void TrackbarChangeDistance(int value) {
+int delta_orient=10;
+int dmaxX=10;
+int dmaxY=10;
+
+void TrackbarChangeOrient(int value) {
 	if(value>=0)
-        distance=value;
+        delta_orient=value;
+}
+
+void TrackbarChangeDmaxX(int value) {
+	if(value>=0)
+        dmaxX=value;
+}
+
+void TrackbarChangeDmaxY(int value) {
+	if(value>=0)
+        dmaxY=value;
+}
+
+
+int min=0;
+int max=255;
+
+void TrackbarChangeMin(int value) {
+        min=value;
+}
+
+void TrackbarChangeMax(int value) {
+        max=value;
+}
+
+int radius = 1;
+int radius_max=10;
+
+//
+// функция-обработчик ползунка - 
+// радиус ядра
+void myTrackbarRadius(int pos) {
+        radius = pos;
+}
+
+int iterations = 1;
+int iterations_max = 10;
+
+//
+// функция-обработчик ползунка - 
+// число итераций
+void myTrackbarIterations(int pos) {
+        iterations = pos;
 }
 
 int main(int argc, char* argv[])
@@ -38,6 +83,9 @@ int main(int argc, char* argv[])
 
 		cvNamedWindow("capture", CV_WINDOW_AUTOSIZE);
 		cvMoveWindow("capture",100,100);
+		
+		cvNamedWindow("cvInRangeS", CV_WINDOW_AUTOSIZE);
+		cvMoveWindow("cvInRangeS",500,100);
 
 		printf("[i] press Enter for capture image and Esc for quit!\n\n");
 
@@ -62,6 +110,18 @@ int main(int argc, char* argv[])
 		CvFont font;
 		cvInitFont( &font, CV_FONT_HERSHEY_COMPLEX,0.7, 0.7, 0, 1, CV_AA);
 		char str[30];
+		
+		cvCreateTrackbar("Delta", "capture", &current_delta, 30, TrackbarChangeDelta);
+		cvCreateTrackbar("Delta orient", "capture", &delta_orient, 360, TrackbarChangeOrient);
+		cvCreateTrackbar("dmaxX", "capture", &dmaxX, 30, TrackbarChangeDmaxX);
+		cvCreateTrackbar("dmaxY", "capture", &dmaxY, 30, TrackbarChangeDmaxY);
+			
+		//cvCreateTrackbar("Min", "capture", &min, 250, TrackbarChangeMin);
+		//cvCreateTrackbar("Max", "capture", &max, 255, TrackbarChangeMax);
+		
+		//cvCreateTrackbar("Radius", "capture", &radius, radius_max, myTrackbarRadius);
+		//cvCreateTrackbar("Iterations", "capture", &iterations, iterations_max, myTrackbarIterations);
+
 
 		while(true){
 			// получаем кадр
@@ -71,10 +131,22 @@ int main(int argc, char* argv[])
 					break;
 			}
 			
-			cvCreateTrackbar("Delta", "capture", &current_delta, 30, TrackbarChangeDelta);
-			cvCreateTrackbar("Distance", "capture", &distance, 20, TrackbarChangeDistance);
 
 			cvCvtColor( frame, dst, CV_BGR2GRAY );
+			
+			//cvSobel(dst, dst, 1, 0, 3);
+			
+			//cvInRangeS(dst, cvScalar(min), cvScalar(max), dst);
+			
+			// создаём ядро
+			//IplConvKernel* Kern = cvCreateStructuringElementEx(radius*2+1, radius*2+1, radius, radius, CV_SHAPE_ELLIPSE);
+
+			// выполняем преобразования
+			//cvErode(dst, dst, Kern, iterations);
+			
+			//cvReleaseStructuringElement(&Kern);
+			
+			//cvShowImage("cvInRangeS", dst);
 			
 			i=0;
 			
@@ -113,9 +185,7 @@ int main(int argc, char* argv[])
 					
 					//printf("%.2f ",output[i]);
 					
-					lines.setat(new TLine(output[7*i+0],output[7*i+1],output[7*i+2],output[7*i+3], //coordinates
-											output[7*i+4], //width
-											output[7*i+5]*180 //degree
+					lines.setat(new TLine(output[7*i+0],output[7*i+1],output[7*i+2],output[7*i+3] //coordinates
 											),k);
 					
 					k++;
@@ -123,18 +193,19 @@ int main(int argc, char* argv[])
 			
 			merged.deleteall();
 			
-			mergeLines(&lines,&merged,10);
+			mergeLines(&lines,&merged,delta_orient,dmaxX,dmaxY);
 			
-			/*
+			
 			for(i=0;i<(merged.length());i++)
 			{
 				cvLine(frame, cvPoint(((TLine*)(merged.get(i)))->getp1()->getx(),((TLine*)(merged.get(i)))->getp1()->gety()), //starting point
 								cvPoint(((TLine*)(merged.get(i)))->getp2()->getx(),((TLine*)(merged.get(i)))->getp2()->gety()), //ending point
-							CV_RGB(0,255,0), //color of the lines
+							CV_RGB(0,0,255), //color of the lines
 							2, //thickness
 							8, 0 );
 			}
-			*/
+			
+			
 			
 			rectangles.deleteall();
 			//calcRectangles(&lines, &rectangles);
@@ -162,7 +233,8 @@ int main(int argc, char* argv[])
 
 			// показываем
 			cvShowImage("capture", frame);
-			//cvShowImage("capture", dst);
+			cvShowImage("cvInRangeS", dst);
+			
         
 			char c = cvWaitKey(33);
 			if (c == 27) { // нажата ESC
@@ -179,5 +251,6 @@ int main(int argc, char* argv[])
 		// освобождаем ресурсы
 		cvReleaseCapture( &capture );
 		cvDestroyWindow("capture");
+		cvDestroyWindow("cvInRangeS");
 		return 0;
 }

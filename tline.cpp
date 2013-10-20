@@ -1,6 +1,9 @@
 #include "tline.h"
 #include "tpoint.h"
 #include <iostream> 
+#include <math.h>
+
+const float PI = 3.141592653589;
 
 void TLine::setp1(int ix, int iy)
 {
@@ -30,16 +33,8 @@ TLine::TLine(int ix1, int iy1, int ix2, int iy2)
 {
 	p1.setxy(ix1, iy1);
 	p2.setxy(ix2, iy2);
+	
 }
-
-TLine::TLine(int ix1, int iy1, int ix2, int iy2, float new_degree, float new_width)
-{
-	p1.setxy(ix1, iy1);
-	p2.setxy(ix2, iy2);
-	set_degree(new_degree);
-	set_width(new_width);
-}
-
 
 TLine::~TLine(void)
 {
@@ -74,22 +69,15 @@ void TLine::shift(int dx,int dy)
 	p2.shift(dx,dy);
 }
 
-float TLine::get_degree()
+double TLine::get_length()
 {
-	return degree;
-}
-float TLine::get_width()
-{
-	return width;
+	return sqrt((p1.getx()-p2.getx())*(p1.getx()-p2.getx())+(p1.gety()-p2.gety())*(p1.gety()-p2.gety()));
 }
 
-void TLine::set_degree(float value)
+double TLine::get_angle()
 {
-	degree=value;
+	return atan2((p1.gety()-p2.gety()),(p1.getx()-p2.getx()))*180/PI;
 }
 
-void TLine::set_width(float value)
-{
-	width=value;
-}
+
 

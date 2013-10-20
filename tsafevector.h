@@ -14,6 +14,7 @@ public:
 	virtual void deleteall();
 	int length();
 	void mix();
+	void deleteat(int pos);
 };
 
 #endif

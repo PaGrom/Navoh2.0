@@ -70,3 +70,17 @@ void TSafeVector::mix()
 		std::swap(arr[i], arr[rand() % size]);
 	}
 }
+
+void TSafeVector::deleteat(int pos)
+{
+	if((pos>=0)&&(pos<size))
+	{
+		
+		for(size_t i=pos; i<(size-1); i++)
+			std::swap(arr[i],arr[i+1]);
+		
+		arr[size]=NULL;
+			
+		size--;
+	}
+}

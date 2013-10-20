@@ -2,6 +2,8 @@
 
 #include "findrect.h"
 
+const float PI = 3.141592653589;
+
 void getDXY(TLine *l, float *dx, float *dy, int *x1, int *x2, int *y1, int *y2)
 {
 	if(l->getp2()->getx() > l->getp1()->getx()) 
@@ -160,73 +162,220 @@ void showRectangles(TSafeVector *recsq)
 	}
 }
 
-void mergeLines(TSafeVector *original, TSafeVector *merged, int distance)
+void mergeLines(TSafeVector *original, TSafeVector *merged, double dorient, double dmaxX, double dmaxY)
 {
 	
-	double k, b; // y=kx+b
-	double xa, ya, xb, yb; //coordinates of line`s points
-	int x1, y1, x2, y2;
-	double kp, b1, b2;
-	double xc1, yc1, xc2, yc2;
-	
-	int count=0;
-	
-	bool small=false;
-	
-	int j;
-	
-	for(int i=0; i<(original->length()); i++)
-	{
+		double xG, yG; //coordinates of the centroid - (xG , yG )
+		int ax, ay, bx, by, cx, cy, dx, dy; //coordinates of endpoints
+		double li, lj; //lengths of lines
+		double oi, oj; //orientations of lines
+		double oc; //orientation of centroid
 		
-		x1=((TLine*)(original->get(i)))->getp1()->getx();
-		y1=((TLine*)(original->get(i)))->getp1()->gety();
+		double axG, ayG, bxG, byG, cxG, cyG, dxG, dyG; //coordinates of the endpoints a , b, c and d in the frame (XG , YG )
 		
-		x2=((TLine*)(original->get(i)))->getp2()->getx();
-		y2=((TLine*)(original->get(i)))->getp2()->gety();
+		double lr; //length of merged line;
 		
-		j=i+1;
+		double m1x, m1y, m2x, m2y; //endpoints of merged line
+	
+		double x, y;
 		
-		while((j<(original->length()))&&(!small))
+		double ac, bd, ad, bc;
+		
+		TSafeVector temp;
+	
+		for(int i=0; i<(original->length()); i++)
 		{
-			small=false;
-			
-			xa=((TLine*)(original->get(j)))->getp1()->getx();
-			ya=((TLine*)(original->get(j)))->getp1()->gety();
-		
-			xb=((TLine*)(original->get(j)))->getp2()->getx();
-			yb=((TLine*)(original->get(j)))->getp2()->gety();
-		
-			k=(yb-ya)/(xb-xa);
-			b=ya-k*xa;
-		
-			kp=(-1)/k;
-		
-			b1=y1-kp*x1;
-			b2=y2-kp*x2;
-		
-			xc1=(b1-b)/(k-kp);
-			xc2=(b2-b)/(k-kp);
-		
-			yc1=k*xc1+b;
-			yc2=k*xc2+b;
-		
-			if((abs(xc1-xc2)<(xa-xb))&&(abs(yc1-yc2)<(ya-yb))&&
-				(((xc1-x1)*(xc1-x1)+(yc1-y1)*(yc1-y1))<(distance*distance))&&
-				(((xc2-x2)*(xc2-x2)+(yc2-y2)*(yc2-y2))<(distance*distance)))
+				temp.setat(original->get(i),i);
+		}
+
+		int count=0;
+				
+		for(int i=0; i<(temp.length()); i++)
+		{
+				
+			if(temp.get(i)!=NULL)
 			{
-				small=true;
+				
+				ax=((TLine*)(temp.get(i)))->getp1()->getx();
+				ay=((TLine*)(temp.get(i)))->getp1()->gety();
+		
+				bx=((TLine*)(temp.get(i)))->getp2()->getx();
+				by=((TLine*)(temp.get(i)))->getp2()->gety();
+				
+				oi=((TLine*)(temp.get(i)))->get_angle();
+				
+				li=((TLine*)(temp.get(i)))->get_length();
+				
+				TLine * candidate = new TLine(ax,ay,bx,by);
+				
+				lr=candidate->get_length();
+				
+				for(int j=0; j<temp.length(); j++)
+				{
+						
+						ax=candidate->getp1()->getx();
+						ay=candidate->getp1()->gety();
+						
+						bx=candidate->getp2()->getx();
+						by=candidate->getp2()->gety();
+						
+						oi=candidate->get_angle();
+						
+						if((temp.get(j)!=NULL)&&(j!=i))
+						//if(j!=i)
+						{
+						
+								cx=((TLine*)(temp.get(j)))->getp1()->getx();
+								cy=((TLine*)(temp.get(j)))->getp1()->gety();
+		
+								dx=((TLine*)(temp.get(j)))->getp2()->getx();
+								dy=((TLine*)(temp.get(j)))->getp2()->gety();
+								
+								oj=((TLine*)(temp.get(j)))->get_angle();
+								
+								lj=((TLine*)(temp.get(j)))->get_length();
+						
+								//Check the maximum allowed directional difference (dorient) of the two segments
+								if((abs(oi-oj)<dorient)||(abs(180-abs(oi)-abs(oj))<dorient))
+								{
+									
+									if(abs(oi-oj)<90)
+									{
+											oc=(li*oi+lj*oj)/(li+lj);
+											//printf("1 %.5f ",oc);
+									}
+									else
+									{
+											oc=(li*oi+lj*(oj-180*(oj/abs(oj))))/(li+lj);
+											//printf("2 %.5f ",oc);
+									}
+									
+									//Define a frame (XG , YG ) centered on the
+									//centroid (xG , yG ) and having the XG axis
+									//parallel to the direction θr of the merged line.
+
+									xG=(li*(ax+bx)+lj*(cx+dx))/(2*(li+lj));
+									yG=(li*(ay+by)+lj*(cy+dy))/(2*(li+lj));
+									
+									//Determine the coordinates of the endpoints a, b, c and d of both segments in the frame
+									//(XG , YG ). The coordinate transformation is a
+									//translation followed by a rotation:
+
+									axG=(ay-yG)*sin(oc*PI/180)+(ax-xG)*cos(oc*PI/180);
+									ayG=(ay-yG)*cos(oc*PI/180)-(ax-xG)*sin(oc*PI/180);
+									
+									bxG=(by-yG)*sin(oc*PI/180)+(bx-xG)*cos(oc*PI/180);
+									byG=(by-yG)*cos(oc*PI/180)-(bx-xG)*sin(oc*PI/180);
+									
+									cxG=(cy-yG)*sin(oc*PI/180)+(cx-xG)*cos(oc*PI/180);
+									cyG=(cy-yG)*cos(oc*PI/180)-(cx-xG)*sin(oc*PI/180);
+									
+									dxG=(dy-yG)*sin(oc*PI/180)+(dx-xG)*cos(oc*PI/180);
+									dyG=(dy-yG)*cos(oc*PI/180)-(dx-xG)*sin(oc*PI/180);
+									
+									//The maximum distance on the YG axis, between the most distant endpoints
+									//must fit in the distance dmaxY allowed for merging
+									if((abs(ayG-cyG)<dmaxY)&&(abs(ayG-dyG)<dmaxY)&&(abs(byG-dyG)<dmaxY)&&(abs(byG-cyG)<dmaxY))
+									{
+									
+											ac=abs(axG-cxG);
+											ad=abs(axG-dxG);
+									
+											bd=abs(bxG-dxG);
+											bc=abs(bxG-cxG);
+									
+											if((ac>=ad)&&(ac>=bd)&&(ac>=bc))
+											{
+													m1x=axG;
+													m1y=ayG;
+											
+													m2x=cxG;
+													m2y=cyG;
+											}
+											else
+											{
+													if((ad>=ac)&&(ad>=bd)&&(ad>=bc))
+													{
+															m1x=axG;
+															m1y=ayG;
+											
+															m2x=dxG;
+															m2y=dyG;
+													}
+													else
+													{
+															if((bd>=ac)&&(bd>=ad)&&(bd>=bc))
+															{
+																	m1x=bxG;
+																	m1y=byG;
+											
+																	m2x=dxG;
+																	m2y=dyG;
+															}
+															else
+															{
+																	if((bc>=ac)&&(bc>=ad)&&(bc>=bd))
+																	{
+																			m1x=bxG;
+																			m1y=byG;
+											
+																			m2x=cxG;
+																			m2y=cyG;
+																	}
+																	else
+																	{
+																			printf("Something is rotten in the state of Denmark...\n");
+																	}
+															}
+													}
+											}
+											
+											//The maximum distance on the XG axis, between the endpoints
+											//must fit in the distance dmaxX allowed for merging
+											if((abs(m1x-m2x)-(abs(axG-bxG)+abs(cxG-dxG)))<dmaxX)
+											{
+													//Return to the original (X,Y) frame, reverse previous rotation
+													
+													x=(0-yG)*sin(oc*PI/180)+(0-xG)*cos(oc*PI/180);
+													y=(0-yG)*cos(oc*PI/180)-(0-xG)*sin(oc*PI/180);
+									
+													m1y=(0-y)*cos((-oc)*PI/180)-(m1x-x)*sin((-oc)*PI/180);
+													m1x=(0-y)*sin((-oc)*PI/180)+(m1x-x)*cos((-oc)*PI/180);
+									
+													m2y=(0-y)*cos((-oc)*PI/180)-(m2x-x)*sin((-oc)*PI/180);
+													m2x=(0-y)*sin((-oc)*PI/180)+(m2x-x)*cos((-oc)*PI/180);
+									
+													candidate->getp1()->setx(m1x);
+													candidate->getp1()->sety(m1y);
+						
+													candidate->getp2()->setx(m2x);
+													candidate->getp2()->sety(m2y);
+									
+													//printf("line %d совпадает с line %d\n",i,j);
+													//printf("%.5f %.5f \n",xG,yG);
+													//printf("%.5f %.5f %.5f %.5f \n",m1x,m1y,m2x,m2y);
+									
+													temp.setat(NULL,j);
+													//temp.deleteat(j);
+													
+											}//dmaxX
+											
+									}//dmaxY
+										
+								}// dorient
+								
+						}//if NULL j!=i
+								
+				}//end of second cycle
+				
+				merged->setat(candidate,count++);
+				
 			}
-			
-			j++;
-			
 		}
 		
-		if(!small)
-		{
-			merged->setat(new TLine(x1,y1,x2,y2),count);
-			count++;
-		}
+		//printf("%d merged lines\n",merged->length());
 		
-	}
+		temp.deleteall();
+		
 }
 
