@@ -2,7 +2,7 @@
 #ifndef OWN_AFFINEDISTORTION
 #define OWN_AFFINEDISTORTION
 
-#include "trectangle.h"
+//#include "trectangle.h"
 
 #endif
 

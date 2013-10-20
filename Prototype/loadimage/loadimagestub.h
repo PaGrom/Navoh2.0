@@ -16,8 +16,8 @@ class LoadImageStub{
 	
 public:
   //modify this function to use your code
-  static IplImage* getImageFromCamera();
+  static Mat getImageFromCamera();
   //modify this function to use your code
-  static IplImage* getImageFromDisk(char* file);
+  static Mat getImageFromDisk(char* file);
   
 };
