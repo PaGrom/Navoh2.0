@@ -16,6 +16,6 @@ public:
   //modify to use your code
   static Mat loadFeatures(char* image);
   //modify to use your code
-  static CvHistogram* loadHistogram(char* image);
+  static Mat loadHistogram(char* image);
 	
 };

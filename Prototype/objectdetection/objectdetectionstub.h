@@ -3,7 +3,9 @@
 
 #include <cv.h>
 #include <iostream>
-#include "trectangle.h"
+#include "objectlibs/trectangle.h"
+
+using namespace cv;
 
 #endif
 
@@ -11,7 +13,7 @@ class ObjectDetectionStub{
 	
   public: 
   //modify to use your code
-  vector<TRectangle> findRectangles(IplImage* img);
+  static vector<TRectangle> findRectangles(Mat img);
   //modify to use your code
-  vector<IplImage*> getImagesToCompare(vector<TRectangle> rects);
+  static vector<Mat> getImagesToCompare(Mat img);
 };
