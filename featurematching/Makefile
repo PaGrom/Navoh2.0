@@ -3,8 +3,8 @@ CXXFLAGS = `pkg-config --cflags opencv` -O0 -g3 -Wall -c
 LIBS = `pkg-config --libs opencv`
 
 EXECUTABLE = navoh
-COMMON_SOURCES = featurematchingtest1.cpp featurematching2.cpp testBench.cpp
-COMMON_OBJECTS = featurematchingtest1.o featurematching2.o testBench.o
+COMMON_SOURCES = featurematching.cpp featurematchingtest.cpp
+COMMON_OBJECTS = featurematching.o featurematchingtest.o  
 .PHONY: all navoh
 
 all: navoh

@@ -8,3 +8,18 @@
 #include "opencv2/nonfree/features2d.hpp"
 
 using namespace cv;
+
+#define MAXDIST 50
+#define MAXFEATUREPOINTS 200
+
+class FeatureMatching{
+	
+public:
+	
+	 static Mat detectAndDiscribeFeatures(Mat img,vector<KeyPoint> &key);
+	 static vector<DMatch> matchFeatures(Mat img1,Mat img2);
+	
+	
+	
+	
+};
