@@ -11,12 +11,12 @@ using namespace cv;
 class Histogram {
 private:
 
- Mat hist;
+ MatND hist;
 
 
 public:
   Histogram();
-  Histogram(CvHistogram* histo);
+  Histogram(Mat histo);
 
   void calculate(Mat img);
 
