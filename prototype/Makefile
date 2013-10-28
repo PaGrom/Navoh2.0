@@ -6,17 +6,17 @@ EXECUTABLE = navoh2.0
 AFFINEDISTORTION= affinedistortion/affinedistortionstub.cpp
 OBJECTDETECTION = objectdetection/objectdetectionstub.cpp objectdetection/objectlibs/gobject.cpp objectdetection/objectlibs/tline.cpp objectdetection/objectlibs/tpoint.cpp objectdetection/objectlibs/trectangle.cpp 
 OBJECTDATABASE  = objectdatabase/databasestub.cpp
-COMPARE_SOURCES = compare/comparestub.cpp
+COMPARE_SOURCES = compare/comparestub.cpp compare/compare.cpp compare/histogramcompare/histogram.cpp compare/featurematching/featurematching.cpp
 LOAD_SOURCES    = loadimage/loadimagestub.cpp
 AFFINEDISTORTIONO = affinedistortion/affinedistortionstub.o
 OBJECTDETECTIONO = objectdetection/objectdetectionstub.o objectdetection/objectlibs/gobject.o objectdetection/objectlibs/tline.o objectdetection/objectlibs/tpoint.o objectdetection/objectlibs/trectangle.o
 OBJECTDATABASEO  = objectdatabase/databasestub.o
-COMPARE_OBJECTS = compare/comparestub.o
+COMPARE_OBJECTS = compare/comparestub.o compare/compare.o compare/histogramcompare/histogram.o compare/featurematching/featurematching.o
 LOAD_OBJECTS    = loadimage/loadimagestub.o
 
 COMMON_SOURCES = programexec.cpp $(LOAD_SOURCES) $(COMPARE_SOURCES) $(OBJECTDATABASE) $(OBJECTDETECTION) $(AFFINEDISTORTION)
 COMMON_OBJECTS = programexec.o $(LOAD_OBJECTS) $(COMPARE_OBJECTS) $(OBJECTDATABASEO) $(OBJECTDETECTIONO) $(AFFINEDISTORTIONO)
-OBJECTS   = programexec.o loadimagestub.o comparestub.o objectdetectionstub.o affinedistortionstub.o gobject.o tline.o tpoint.o trectangle.o databasestub.o
+OBJECTS   = programexec.o loadimagestub.o comparestub.o objectdetectionstub.o affinedistortionstub.o gobject.o tline.o tpoint.o trectangle.o databasestub.o compare.o histogram.o featurematching.o
 
 
 .PHONY: all histogramcomparetests
