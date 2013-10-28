@@ -79,5 +79,31 @@ double TLine::get_angle()
 	return atan2((p1.gety()-p2.gety()),(p1.getx()-p2.getx()))*180/PI;
 }
 
+double TLine::get_k()
+{
+	return (p1.gety()-p2.gety())/(p1.getx()-p2.getx());
+}
 
+double TLine::get_b()
+{
+	return p1.gety()-((p1.gety()-p2.gety())/(p1.getx()-p2.getx()))*p1.getx();
+}
+
+TPoint * TLine::get_cross(TLine *line)
+{
+	if(get_k()==line->get_k())
+	{
+		return NULL;
+	}
+	else
+	{
+		
+		double x,y;
+		
+		x=(line->get_b()-get_b())/(get_k()-line->get_k());
+		y=get_k()*x+get_b();
+		
+		return new TPoint(x,y);
+	}
+}
 

@@ -53,5 +53,5 @@ void TVector::deleteall()
 }
 void TVector::show(int pos)
 {
-
+		
 }

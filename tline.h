@@ -20,7 +20,12 @@ public:
 	void shift(int dx,int dy);
 	double get_length(); 
 	double get_angle();
-
+	
+	double get_k();
+	double get_b();
+	
+	TPoint * get_cross(TLine *line);
+	
 	friend bool operator==(const TLine& left, const TLine& right);
 };
 
