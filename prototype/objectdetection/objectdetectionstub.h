@@ -4,6 +4,9 @@
 #include <cv.h>
 #include <iostream>
 #include "objectlibs/trectangle.h"
+#include "cvrect.h"
+#include "findrect.h"
+
 
 using namespace cv;
 

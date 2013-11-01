@@ -20,6 +20,7 @@ public:
 	virtual void rotate(int x, int y, float angle/*, int center*/);
 	TLine * getLine(int li);
 	virtual void shift(int dx, int dy);
+	void getCorners(TPoint *p1, TPoint *p2, TPoint *p3, TPoint *p4);
 };
 
 #endif

@@ -75,3 +75,11 @@ void TRectangle::shift(int dx, int dy)
 	l4.getp1()->shift(dx,dy);
 	l4.getp2()->shift(dx,dy);
 }
+
+void TRectangle::getCorners(TPoint *p1, TPoint *p2, TPoint *p3, TPoint *p4)
+{
+	p1=l1.get_cross(&l2);
+	p2=l2.get_cross(&l3);
+	p3=l3.get_cross(&l4);
+	p4=l4.get_cross(&l1);
+}

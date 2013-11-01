@@ -34,6 +34,7 @@ int GObject::getx()
 {
 	return x;
 }
+
 int GObject::gety()
 {
 	return y;

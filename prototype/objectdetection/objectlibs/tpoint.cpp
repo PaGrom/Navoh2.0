@@ -24,7 +24,7 @@ TPoint::~TPoint(void)
 
 }
 
-int delta = 5;
+int delta = 20;
 
 void change_delta(int value)
 {
