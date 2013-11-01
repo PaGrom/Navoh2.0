@@ -8,7 +8,7 @@ Histogram::Histogram(Mat histo){
   hist=histo;
 }
 
-void Histogram::calculate(Mat img){
+void Histogram::calculate(Mat *img){
 	  
   int hist_size[]={181,256};
   float rangeh[]= {0,180};
@@ -16,7 +16,7 @@ void Histogram::calculate(Mat img){
   const float* ranges[]= {rangeh,rangeS};
   int chanels[]={0,1};
   Mat hsv;
-  cvtColor(img,hsv, CV_BGR2HSV);
+  cvtColor(*img,hsv, CV_BGR2HSV);
   calcHist(&hsv,1,chanels,Mat(),hist,2,hist_size,ranges,true, false);
   normalize( hist, hist, 0, 1, NORM_MINMAX, -1, Mat() );
   //printf("Type %d, should be %d \n", hist.type(), CV_32F);

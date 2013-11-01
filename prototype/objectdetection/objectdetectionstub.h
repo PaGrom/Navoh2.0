@@ -16,7 +16,7 @@ class ObjectDetectionStub{
 	
   public: 
   //modify to use your code
-  static vector<TRectangle> findRectangles(Mat img);
+  static vector<TRectangle>* findRectangles(Mat *img);
   //modify to use your code
-  static vector<Mat> getImagesToCompare(Mat img);
+  static vector<Mat>* getImagesToCompare(Mat *img);
 };

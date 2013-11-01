@@ -3,21 +3,21 @@
 /**
  * compares in one run all histograms and for possible matches also the features.
  */
-int Compare::compare(Mat img, vector<Mat> histograms, vector<Mat> features){
+int Compare::compare(Mat *img, vector<Mat> *histograms, vector<Mat> *features){
 	
   Histogram hist;
   hist.calculate(img);
   vector<KeyPoint> key;
-  Mat des= FeatureMatching::detectAndDiscribeFeatures(img, key);
+  Mat des= FeatureMatching::detectAndDiscribeFeatures(*img, key);
   vector<DMatch> matches;
   unsigned int j=0,k=0;
-  for (unsigned int i=0; i<histograms.size(); ++i)
+  for (unsigned int i=0; i<histograms->size(); ++i)
   {
 	
-    if(hist==Histogram(histograms[i]))
+    if(hist==Histogram((*histograms)[i]))
     {  
      //printf("hists are eq\n");
-     matches=FeatureMatching::matchFeatures(des,features[i]);
+     matches=FeatureMatching::matchFeatures(des,(*features)[i]);
       if(matches.size()>k)
       {
         k=matches.size();
@@ -36,11 +36,11 @@ int Compare::compare(Mat img, vector<Mat> histograms, vector<Mat> features){
 
 /**
  * compares only histograms and returns a list with possible matches
- */
+ *//*
 vector<int> Compare::compareHist(Mat img, vector<Mat> histograms){
   
   Histogram hist;
-  hist.calculate(img);
+  hist.calculate(&img);
   vector<int> pict;
   for (unsigned int i=0; i<histograms.size(); ++i)
   {
@@ -54,7 +54,7 @@ vector<int> Compare::compareHist(Mat img, vector<Mat> histograms){
 
 /**
  * compares the Featurepoints returns the position of the best matching picture
- */
+ *
 int Compare::matchFeatures(Mat img, vector<Mat> features,vector<int> pics){
   unsigned int most=0,place;
   vector<KeyPoint> key;
@@ -74,5 +74,5 @@ int Compare::matchFeatures(Mat img, vector<Mat> features,vector<int> pics){
 	
   return -1; 
 }
-
+*/
 

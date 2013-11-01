@@ -22,7 +22,7 @@ public:
   Histogram();
   Histogram(Mat histo);
 
-  void calculate(Mat img);
+  void calculate(Mat *img);
 
   Mat getHistogram();
 

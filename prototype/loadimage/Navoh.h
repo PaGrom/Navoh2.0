@@ -16,11 +16,12 @@ public:
   Navoh();
   ~Navoh();
   void capture(int devNumber);
+  void captureFromVideo(std::string file);
   void loadImageFromFile(std::string imageName);
   void loadImageFromCam();
   void displayImage();
   void release();
-  cv::Mat getImg();
+  cv::Mat* getImg();
 };
 
 #endif

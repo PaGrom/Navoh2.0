@@ -4,8 +4,8 @@
  * Comparism in one step with preloaded features
  * @see compare.h
  */
-int CompareStub::compare(Mat img, vector<Mat> hists, vector<Mat> features){
-  if(!hists.empty()&&!features.empty())
+int CompareStub::compare(Mat *img, vector<Mat> *hists, vector<Mat> *features){
+  if(!hists->empty()&&!features->empty())
   return Compare::compare(img,hists,features);
   else
   return -1;
@@ -14,7 +14,7 @@ int CompareStub::compare(Mat img, vector<Mat> hists, vector<Mat> features){
  * comparism of histograms returning a list of imagepositions which fullfill the criterion
  * 
  * @see compare.h
- */
+ *
 vector<int> CompareStub::comparehist(Mat img, vector<Mat> hists)
 {
   if(!hists.empty())
@@ -28,11 +28,11 @@ vector<int> CompareStub::comparehist(Mat img, vector<Mat> hists)
  * the image number is handed to the function by imagelist.
  * 
  * @see compare.h
- */
+ *
 int CompareStub::matchFeaturePoints(Mat img, vector<Mat> featurePoints, vector<int> imageList)
 {
   if(!featurePoints.empty()&&!imageList.empty())
   return Compare::matchFeatures(img,featurePoints,imageList);
   else
   return -1;
-}
+}*/

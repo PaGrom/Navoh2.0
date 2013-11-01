@@ -19,7 +19,7 @@ private:
 public:
   LoadImageStub(int dev);
   //modify this function to use your code
-  Mat getImageFromCamera();
+  Mat* getImageFromCamera();
   //modify this function to use your code
   Mat getImageFromDisk(char* file);
   

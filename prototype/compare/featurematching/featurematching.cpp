@@ -1,6 +1,6 @@
 #include "featurematching.h"
 
-Mat FeatureMatching::detectAndDiscribeFeatures(Mat img, vector<KeyPoint> &key){
+Mat FeatureMatching::detectAndDiscribeFeatures(Mat &img, vector<KeyPoint> &key){
 
   Mat desc;
   vector<KeyPoint> feat;
@@ -16,7 +16,7 @@ Mat FeatureMatching::detectAndDiscribeFeatures(Mat img, vector<KeyPoint> &key){
   return desc;
 }
 
-vector<DMatch> FeatureMatching::matchFeatures(Mat img1,Mat img2){
+vector<DMatch> FeatureMatching::matchFeatures(Mat &img1,Mat &img2){
 
   vector<DMatch> matches;
   vector<DMatch>goodmatches;

@@ -9,7 +9,7 @@ Navoh::~Navoh() {
 }
 
 void Navoh::loadImageFromFile(std::string imageName) {
-  image = cvLoadImage(imageName.c_str(), 1);
+  img = cvLoadImage(imageName.c_str(), 1);
   if (!image) {
     throw openImageException();
     return;
@@ -17,6 +17,15 @@ void Navoh::loadImageFromFile(std::string imageName) {
 }
 void Navoh::capture(int devNumber){
 	  cap = cv::VideoCapture(devNumber);
+	  if (!cap.isOpened()) {
+	    throw captureCameraException();
+	    return;
+	  }
+	  cap.set(CV_CAP_PROP_FRAME_WIDTH, 320);
+	  cap.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
+}
+void Navoh::captureFromVideo(std::string file){
+	  cap = cv::VideoCapture(file);
 	  if (!cap.isOpened()) {
 	    throw captureCameraException();
 	    return;
@@ -41,6 +50,6 @@ void Navoh::release(){
 	//cvReleaseCapture(&cap);
 }
 
-cv::Mat Navoh::getImg(){
-  return img;
+cv::Mat* Navoh::getImg(){
+  return &img;
 }

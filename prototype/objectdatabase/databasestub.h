@@ -14,8 +14,8 @@ class DatabaseStub {
 	
 public:
   //modify to use your code
-  static vector<Mat>loadFeatures();
+  static vector<Mat>* loadFeatures();
   //modify to use your code
-  static vector<Mat>loadHistograms();
+  static vector<Mat>* loadHistograms();
 	
 };

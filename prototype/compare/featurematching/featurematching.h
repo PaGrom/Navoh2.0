@@ -20,8 +20,8 @@ class FeatureMatching{
 	
 public:
 	
-	 static Mat detectAndDiscribeFeatures(Mat img,vector<KeyPoint> &key);
-	 static vector<DMatch> matchFeatures(Mat img1,Mat img2);
+	 static Mat detectAndDiscribeFeatures(Mat &img,vector<KeyPoint> &key);
+	 static vector<DMatch> matchFeatures(Mat &img1,Mat &img2);
 
 };
 

@@ -4,12 +4,12 @@
 
  LoadImageStub::LoadImageStub(int dev){
 	 nav= Navoh();
-	 nav.capture(dev);
+	 nav.captureFromVideo("test.mp4");
  }
  
  
 //modify this function to use your code
-   Mat LoadImageStub::getImageFromCamera(){
+   Mat* LoadImageStub::getImageFromCamera(){
 	  nav.loadImageFromCam();
 	   return nav.getImg();
   }
