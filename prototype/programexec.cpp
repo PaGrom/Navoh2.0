@@ -5,18 +5,25 @@
 #include "objectdatabase/databasestub.h"
 
 int main (int argc, char** argv){
-	bool loop=false;
-	LoadImageStub load;
-	int imgMatch;
+	bool loop=true;
+	LoadImageStub load(0);
+	int imgMatch=-1;
 	do{
 		Mat img=load.getImageFromCamera();
-		vector<Mat> imgs  = ObjectDetectionStub::getImagesToCompare(img);
-		vector<Mat> hists = DatabaseStub::loadHistograms();
-		vector<Mat> featur= DatabaseStub::loadFeatures();
-		imgMatch          = CompareStub::compare(img,hists,featur);
+		vector<TRectangle> rect= ObjectDetectionStub::findRectangles(img);
+		vector<Mat> imgs  = ObjectDetectionStub::getImagesToCompare(img);//dummy
+		vector<Mat> hists = DatabaseStub::loadHistograms();//dummy
+		vector<Mat> featur= DatabaseStub::loadFeatures();//dummy
+		for(unsigned int i=0; i<imgs.size();++i){
+		imgMatch          = CompareStub::compare(img/*s[i]*/,hists,featur);
+		}
 	    imshow("Working til here",img);
-		load.releaseCameraCapture();
-		printf("The match was : %d\n",imgMatch);
-		waitKey(0);
+		
+		printf("The match was : %d.",imgMatch);
+		printf("There are %lu rectangles \n", rect.size());
+		waitKey(10);
+		if(waitKey(30)>0)
+		break;
 	}while(loop);
+	load.releaseCameraCapture();
 }

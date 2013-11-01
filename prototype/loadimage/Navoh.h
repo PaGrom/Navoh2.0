@@ -10,13 +10,14 @@
 class Navoh {
 private:
   IplImage* image;
-  CvCapture* cap;
+  cv::VideoCapture cap;
   cv::Mat img;
 public:
   Navoh();
   ~Navoh();
+  void capture(int devNumber);
   void loadImageFromFile(std::string imageName);
-  void loadImageFromCam(int devNumber);
+  void loadImageFromCam();
   void displayImage();
   void release();
   cv::Mat getImg();

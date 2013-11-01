@@ -17,7 +17,7 @@ class LoadImageStub{
 private:
   Navoh nav;
 public:
-  LoadImageStub();
+  LoadImageStub(int dev);
   //modify this function to use your code
   Mat getImageFromCamera();
   //modify this function to use your code

@@ -2,13 +2,15 @@
 
 
 
- LoadImageStub::LoadImageStub(){ 
+ LoadImageStub::LoadImageStub(int dev){
+	 nav= Navoh();
+	 nav.capture(dev);
  }
  
  
 //modify this function to use your code
    Mat LoadImageStub::getImageFromCamera(){
-	  nav.loadImageFromCam(0);
+	  nav.loadImageFromCam();
 	   return nav.getImg();
   }
   //modify this function to use your code
