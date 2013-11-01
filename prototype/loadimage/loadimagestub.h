@@ -8,16 +8,20 @@
 #define OWN_LOADIMAGE
 
 #include <cv.h>
+#include"Navoh.h"
 using namespace cv;
 
 #endif
 
 class LoadImageStub{
-	
+private:
+  Navoh nav;
 public:
+  LoadImageStub();
   //modify this function to use your code
-  static Mat getImageFromCamera();
+  Mat getImageFromCamera();
   //modify this function to use your code
-  static Mat getImageFromDisk(char* file);
+  Mat getImageFromDisk(char* file);
   
+  void releaseCameraCapture();
 };

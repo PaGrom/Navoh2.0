@@ -8,7 +8,7 @@ int CompareStub::compare(Mat img, vector<Mat> hists, vector<Mat> features){
   if(!hists.empty()&&!features.empty())
   return Compare::compare(img,hists,features);
   else
-  return 0;
+  return -1;
 }
 /**
  * comparism of histograms returning a list of imagepositions which fullfill the criterion
