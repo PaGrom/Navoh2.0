@@ -12,3 +12,8 @@
    vector<Mat>* DatabaseStub::loadHistograms(){
 	  return &hists;
   }
+   
+  void DatabaseStub::saveImage(string file,Mat img){
+   
+    imwrite(file,img);
+  }

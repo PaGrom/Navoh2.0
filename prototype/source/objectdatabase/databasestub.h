@@ -6,6 +6,7 @@
 #define OWN_DATABASE
 
 #include <cv.h>
+#include <highgui.h>
 #include "database.h"
 using namespace cv;
 
@@ -26,6 +27,8 @@ public:
   vector<Mat>* loadFeatures();
   //modify to use your code
   vector<Mat>* loadHistograms();
+  
+  void saveImage(string file,Mat img);
   
 };
 

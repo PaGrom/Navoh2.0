@@ -6,7 +6,7 @@
 #include "objectlibs/trectangle.h"
 #include "cvrect.h"
 #include "findrect.h"
-
+#include "cutrect.h"
 
 using namespace cv;
 
