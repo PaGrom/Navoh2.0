@@ -5,7 +5,7 @@
  * @see compare.h
  */
 int CompareStub::compare(Mat *img, vector<Mat> *hists, vector<Mat> *features){
-  if(!hists->empty()&&!features->empty())
+  if(!hists->empty()&&!features->empty()&&!img->rows==0&&!img->cols==0)
   return Compare::compare(img,hists,features);
   else
   return -1;

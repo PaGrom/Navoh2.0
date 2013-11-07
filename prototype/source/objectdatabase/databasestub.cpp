@@ -1,8 +1,13 @@
 #include "databasestub.h" 
+#include "../compare/histogramcompare/histogram.h"
+#include "../compare/featurematching/featurematching.h"
+
+void stubload(vector<Mat>& histograms,vector<Mat>& featurepoints);
 
 
-  DatabaseStub::DatabaseStub(){
+DatabaseStub::DatabaseStub(){
 	 // data("test");
+	  //stubload(hists,feats);
   }
 //modify to use your code
    vector<Mat>* DatabaseStub::loadFeatures(){
@@ -15,5 +20,17 @@
    
   void DatabaseStub::saveImage(string file,Mat img){
    
-    imwrite(file,img);
+	if(!(img.rows==0 || img.cols==0))
+      imwrite(file,img);
+  }
+  
+  void stubload(vector<Mat>& histograms,vector<Mat>& featurepoints){
+	  Mat img= imread("testimg/00.ppm",1);
+	  Histogram histogram;
+	  histogram.calculate(&img);
+	  histograms.push_back(histogram.getHistogram());
+	  vector<KeyPoint> key;
+	  featurepoints.push_back(FeatureMatching::detectAndDiscribeFeatures(img,key));
+	  
+	  
   }

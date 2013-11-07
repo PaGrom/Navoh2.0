@@ -3,6 +3,7 @@
 #define COMPARESTUB
 
 #include <cv.h> 
+#include <cstdio>
 #include "histogramcompare/histogram.h"
 #include "compare.h"
 

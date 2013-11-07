@@ -21,9 +21,11 @@ int main (int argc, char** argv){
 	vector<Mat> *hists;
 	vector<Mat> *featur;
 	
+	char path[100];
 	int vectorsize;
 	int numberOfImages;
 	int imgMatch=-1;
+	int k=0;
 	
 	hists= data.loadHistograms();//dummy
 	featur= data.loadFeatures();//dummy	
@@ -32,11 +34,18 @@ int main (int argc, char** argv){
 		img=load.getImageFromCamera();
 		vectorsize=ObjectDetectionStub::findRectangles(img,&rect);
 		//dummy
+		/*if(k%100==0){
+			 sprintf(path,"testimg/%d.ppm",k);
+			data.saveImage(path,*img);
+		}*/
 		
 		for(unsigned int i=0; i<vectorsize;++i){
 			subImage = ObjectDetectionStub::getSubImageForRectangle(img,&rect[i]);
 			imgMatch = CompareStub::compare(&subImage,hists,featur);
-			
+			if(i%100==0){
+			  sprintf(path,"testimg/%d%d.ppm",i,k);
+			  data.saveImage(path,subImage);
+			}
 			if(imgMatch>-1)
 				ObjectDetectionStub::show(img,&rect[i], vectorsize);
 		}
@@ -44,11 +53,16 @@ int main (int argc, char** argv){
 		
 		printf("The rectangles : %d\n.",vectorsize);
 		//printf("There are %lu rectangles \n", rect->size());
+		if(imgMatch>0)
+		waitKey(0);
+			
 		waitKey(1);
 		//sleep(1);
 		
 		if(waitKey(30)>0)
 		break;
+		k++;
+		imgMatch=-1;
 	}while(loop);
 	load.releaseCameraCapture();
 }

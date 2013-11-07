@@ -12,7 +12,7 @@ int ObjectDetectionStub::findRectangles(Mat* img,vector<TRectangle> *rect){
   LinesFromMat(&grey,&lines);
    //mergeLines(&lines,&merged, 5, 10,10);
   calcRectangles(&lines,&rectangles);
-  DrawRect(img,&rectangles,CV_RGB(0,255,0));
+  //DrawRect(img,&rectangles,CV_RGB(0,255,0));
    //printf("%d \n", rectangles.length());
   for(i=0; i<rectangles.length();++i){
 	   
@@ -26,10 +26,22 @@ int ObjectDetectionStub::findRectangles(Mat* img,vector<TRectangle> *rect){
 
   //modify to use your code
    Mat ObjectDetectionStub::getSubImageForRectangle(Mat *img,TRectangle* rect){
-	  
-	  return CutImage::getSubImage(rect,img);
+	   Mat rev= (*img).clone();
+	   ObjectDetectionStub::show(&rev,rect, 0);
+	   Mat subimg=CutImage::getSubImage(rect,&rev);
+	  return subimg;
   }
    
-   void ObjectDetectionStub::show(Mat* img, TRectangle* rect, int size){
+   void ObjectDetectionStub::show(Mat* img, TRectangle* rect, int pos){
+	   
+	   for(int j=1; j<5; j++){
+	   						line(*img, Point(rect->getLine(j)->getp1()->getx(),
+	   								rect->getLine(j)->getp1()->gety()), 
+	   										Point(rect->getLine(j)->getp2()->getx(),
+	   												rect->getLine(j)->getp2()->gety()), 
+	   							CV_RGB(255,0,0), //color of the lines
+	   							4, //thickness
+	   							8, 0 );
+	   }
 	   
    }

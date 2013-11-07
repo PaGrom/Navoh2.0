@@ -21,5 +21,5 @@ class ObjectDetectionStub{
   //modify to use your code
   static Mat getSubImageForRectangle(Mat *img, TRectangle* rect);
   
-  static void show(Mat* img, TRectangle* rect, int size);
+  static void show(Mat* img, TRectangle* rect, int pos);
 };
