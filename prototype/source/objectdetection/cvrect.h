@@ -4,6 +4,7 @@
 #include <cv.h>
 #include "findrect.h"
 #include "objectlibs/tsafevector.h"
+#include <math.h>
 
 #include "lsd.h"
 

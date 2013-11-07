@@ -24,8 +24,12 @@ void LinesFromMat(Mat *image, TSafeVector *lines) //image must be in grayscale!
 		
 		for(i=0;i<lcnt;i++)
 		{	
-				lines->setat(new TLine(output[7*i+0],output[7*i+1],output[7*i+2],output[7*i+3]),k);
+				double x1=output[7*i+0],x2=output[7*i+2],y1=output[7*i+1],y2=output[7*i+3];
+				if(!(abs(x1-x2)+abs(y1-y2))<2*20)
+				{
+				lines->setat(new TLine(x1,y1,x2,y2),k);
 				k++;
+				}
 		}
 		
 		free(input);

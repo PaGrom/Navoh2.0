@@ -11,13 +11,13 @@ vpath % $(OBJ_DIR)
 
 
 OBJECTDATA_SRC = $(addprefix objectdatabase/, databasestub.cpp)
-OBJECTDETECSRC = $(addprefix objectdetection/, cvrect.cpp findrect.cpp objectdetectionstub.cpp)
+OBJECTDETECSRC = $(addprefix objectdetection/, cvrect.cpp findrect.cpp objectdetectionstub.cpp cutrect.cpp)
 AFFINEDIST_SRC = $(addprefix affinedistortion/, affinedistortionstub.cpp)
 COMPARE_SOURCE = $(addprefix compare/, compare.cpp comparestub.cpp $(addprefix featurematching/, featurematching.cpp) $(addprefix histogramcompare/, histogram.cpp))
 LOADIMG_SOURCE = $(addprefix loadimage/, loadimagestub.cpp Navoh.cpp)
 COMMON_SOURCES =  programexec.cpp $(LOADING_SOURCE) $(COMPARE_SOURCE) $(AFFINEDIST_SRC) $(OBJECTDETECSRC) $(OBJECTDATA_SRC)
 
-OBJECTDATA_OBJ = $(addprefix objectdetection/, cvrect.o findrect.o objectdetectionstub.o)
+OBJECTDATA_OBJ = $(addprefix objectdetection/, cvrect.o findrect.o objectdetectionstub.o cutrect.o)
 OBJECTDETECOBJ = $(addprefix objectdatabase/, databasestub.o)
 AFFINEDIST_OBJ = $(addprefix affinedistortion/, affinedistortionstub.o)
 COMPARE_OBJECT = $(addprefix compare/, compare.o comparestub.o $(addprefix featurematching/, featurematching.o) $(addprefix histogramcompare/, histogram.o)) 
