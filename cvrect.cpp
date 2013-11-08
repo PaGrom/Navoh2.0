@@ -33,29 +33,30 @@ void LinesFromMat(Mat *image, TSafeVector *lines) //image must be in grayscale!
 	
 }
 
-void DrawRect(Mat *image, TSafeVector *rectangles, CvScalar color)
+void DrawRect(Mat *image, TSafeVector *rectangles, CvScalar color, int thickness)
 {
 		for(int i=0;i<rectangles->length();i++)
 		{
 				for(int j=1; j<5; j++)
-						line(*image, Point(((TRectangle*)rectangles->get(i))->getLine(1)->getp1()->getx(),
-												((TRectangle*)rectangles->get(i))->getLine(1)->getp1()->gety()), 
-										Point(((TRectangle*)rectangles->get(i))->getLine(1)->getp2()->getx(),
-												((TRectangle*)rectangles->get(i))->getLine(1)->getp2()->gety()), 
+						line(*image, Point(((TRectangle*)rectangles->get(i))->getLine(j)->getp1()->getx(),
+												((TRectangle*)rectangles->get(i))->getLine(j)->getp1()->gety()), 
+										Point(((TRectangle*)rectangles->get(i))->getLine(j)->getp2()->getx(),
+												((TRectangle*)rectangles->get(i))->getLine(j)->getp2()->gety()), 
 							color, //color of the lines
-							4, //thickness
+							thickness,
 							8, 0 ); 
+							
 		}
 }
 
-void DrawLines(Mat *image, TSafeVector *lines, CvScalar color)
+void DrawLines(Mat *image, TSafeVector *lines, CvScalar color, int thickness)
 {
 		for(int i=0;i<(lines->length());i++)
 		{
 				line(*image, Point(((TLine*)(lines->get(i)))->getp1()->getx(),((TLine*)(lines->get(i)))->getp1()->gety()), //starting point
 								Point(((TLine*)(lines->get(i)))->getp2()->getx(),((TLine*)(lines->get(i)))->getp2()->gety()), //ending point
 							color, //color of the lines
-							2, //thickness
+							thickness, 
 							8, 0 );
 		}
 }

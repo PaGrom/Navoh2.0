@@ -372,10 +372,80 @@ void mergeLines(TSafeVector *original, TSafeVector *merged, double dorient, doub
 				
 			}
 		}
-		
-		//printf("%d merged lines\n",merged->length());
-		
 		temp.deleteall();
+		
+}
+
+void getCorners(TRectangle* rectangle, TPoint* p1, TPoint* p2, TPoint* p3, TPoint* p4)
+{
+		double k1,k2,b1,b2, x, y;
+		
+		//p1
+		k1=rectangle->getLine(1)->get_k();
+		b1=rectangle->getLine(1)->get_b();
+		
+		k2=rectangle->getLine(2)->get_k();
+		b2=rectangle->getLine(2)->get_b();
+		
+		if(k1!=k2)
+		{
+				x=(b2-b1)/(k1-k2);
+				y=k1*x+b1;
+				
+				p1->setx((int)(x+0.5));
+				p1->sety((int)(y+0.5));
+				
+		}
+		
+		//p2
+		k1=rectangle->getLine(2)->get_k();
+		b1=rectangle->getLine(2)->get_b();
+		
+		k2=rectangle->getLine(3)->get_k();
+		b2=rectangle->getLine(3)->get_b();
+		
+		if(k1!=k2)
+		{
+				x=(b2-b1)/(k1-k2);
+				y=k1*x+b1;
+				
+				p2->setx((int)(x+0.5));
+				p2->sety((int)(y+0.5));
+		}
+		
+		//p3
+		k1=rectangle->getLine(3)->get_k();
+		b1=rectangle->getLine(3)->get_b();
+		
+		k2=rectangle->getLine(4)->get_k();
+		b2=rectangle->getLine(4)->get_b();
+		
+		if(k1!=k2)
+		{
+				x=(b2-b1)/(k1-k2);
+				y=k1*x+b1;
+				
+				p3->setx((int)(x+0.5));
+				p3->sety((int)(y+0.5));
+		}
+		
+		//p4
+		k1=rectangle->getLine(1)->get_k();
+		b1=rectangle->getLine(1)->get_b();
+		
+		k2=rectangle->getLine(4)->get_k();
+		b2=rectangle->getLine(4)->get_b();
+		
+		if(k1!=k2)
+		{
+				x=(b2-b1)/(k1-k2);
+				y=k1*x+b1;
+				
+				p4->setx((int)(x+0.5));
+				p4->sety((int)(y+0.5));
+				
+		}
+		
 		
 }
 
