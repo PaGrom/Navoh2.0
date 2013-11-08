@@ -4,9 +4,9 @@
  * Comparism in one step with preloaded features
  * @see compare.h
  */
-int CompareStub::compare(Mat *img, vector<Mat> *hists, vector<Mat> *features){
+int CompareStub::compare(Mat *img, vector<Mat> *hists, vector<Mat> *features,int& blackPixAdded){
   if(!hists->empty()&&!features->empty()&&!img->rows==0&&!img->cols==0)
-  return Compare::compare(img,hists,features);
+  return Compare::compare(img,hists,features,blackPixAdded);
   else
   return -1;
 }

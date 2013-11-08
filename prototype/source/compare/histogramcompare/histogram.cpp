@@ -8,7 +8,7 @@ Histogram::Histogram(Mat histo){
   hist=histo;
 }
 
-void Histogram::calculate(Mat *img){
+void Histogram::calculate(Mat *img,int& blackPixAdded){
 	  
   int hist_size[]={181,256};
   float rangeh[]= {0,180};
@@ -18,6 +18,7 @@ void Histogram::calculate(Mat *img){
   Mat hsv;
   cvtColor(*img,hsv, CV_BGR2HSV);
   calcHist(&hsv,1,chanels,Mat(),hist,2,hist_size,ranges,true, false);
+  eraseBlackPix(blackPixAdded);
   normalize( hist, hist, 0, 1, NORM_MINMAX, -1, Mat() );
   //printf("Type %d, should be %d \n", hist.type(), CV_32F);
 }
@@ -33,4 +34,10 @@ bool operator==(const Histogram& left, const Histogram& right) {
 	//printf("Type %d and %d, should be %d \n", left.hist.type(),right.hist.type(), CV_32F);
   double x =compareHist(left.hist,right.hist,CV_COMP_BHATTACHARYYA);
   return (x<0.6);
+}
+
+void Histogram::eraseBlackPix(int& blackPixAdded){
+	
+	int &a=hist.at<int>(0,0);
+	a-=blackPixAdded;
 }

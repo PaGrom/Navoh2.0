@@ -26,8 +26,9 @@ DatabaseStub::DatabaseStub(){
   
   void stubload(vector<Mat>& histograms,vector<Mat>& featurepoints){
 	  Mat img= imread("testimg/00.ppm",1);
+	  int x=0;
 	  Histogram histogram;
-	  histogram.calculate(&img);
+	  histogram.calculate(&img,x);
 	  histograms.push_back(histogram.getHistogram());
 	  vector<KeyPoint> key;
 	  featurepoints.push_back(FeatureMatching::detectAndDiscribeFeatures(img,key));

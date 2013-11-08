@@ -3,10 +3,11 @@
 /**
  * compares in one run all histograms and for possible matches also the features.
  */
-int Compare::compare(Mat *img, vector<Mat> *histograms, vector<Mat> *features){
+int Compare::compare(Mat *img, vector<Mat> *histograms, vector<Mat> *features,int& blackPixAdded){
 	
   Histogram hist;
-  hist.calculate(img);
+  hist.calculate(img,blackPixAdded);
+
   vector<KeyPoint> key;
   Mat des= FeatureMatching::detectAndDiscribeFeatures(*img, key);
   vector<DMatch> matches;
@@ -39,8 +40,9 @@ int Compare::compare(Mat *img, vector<Mat> *histograms, vector<Mat> *features){
  */
 vector<int> Compare::compareHist(Mat *img, vector<Mat> *histograms){
   
+  int x=0;
   Histogram hist;
-  hist.calculate(img);
+  hist.calculate(img,x);
   vector<int> pict;
   for (unsigned int i=0; i<histograms->size(); ++i)
   {

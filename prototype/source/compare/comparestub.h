@@ -15,7 +15,7 @@ public:
   //modify this function to use your code
 	
   // one step comparison with complete vectors
-  static int compare(Mat *img, vector<Mat> *hists, vector<Mat> *features);
+  static int compare(Mat *img, vector<Mat> *hists, vector<Mat> *features,int& blackPixAdded);
   // histogram comparison returning a vector with image numbers which match a condition
   static vector<int> comparehist(Mat *img, vector<Mat> *hists);
   

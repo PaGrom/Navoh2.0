@@ -5,7 +5,7 @@
 
 void getMininalMaxXYCorner(TLine* ax, TLine* bx, TLine* cx, TLine* dx, int &x,int &y, int &a, int &b);
 
-cv::Mat CutImage::getSubImage(TRectangle *rect, cv::Mat* img){
+cv::Mat CutImage::getSubImage(TRectangle *rect, cv::Mat* img, int& blackPixadded){
 
   int x1,x2,y1,y2;
 

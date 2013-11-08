@@ -22,6 +22,7 @@ int main (int argc, char** argv){
 	vector<Mat> *featur;
 	
 	char path[100];
+	int blackPixAdded=0;
 	int vectorsize;
 	int numberOfImages;
 	int imgMatch=-1;
@@ -40,8 +41,8 @@ int main (int argc, char** argv){
 		}*/
 		
 		for(unsigned int i=0; i<vectorsize;++i){
-			subImage = ObjectDetectionStub::getSubImageForRectangle(img,&rect[i]);
-			imgMatch = CompareStub::compare(&subImage,hists,featur);
+			subImage = ObjectDetectionStub::getSubImageForRectangle(img,&rect[i],blackPixAdded);
+			imgMatch = CompareStub::compare(&subImage,hists,featur,blackPixAdded);
 			if(i%100==0){
 			  sprintf(path,"testimg/%d%d.ppm",i,k);
 			  data.saveImage(path,subImage);

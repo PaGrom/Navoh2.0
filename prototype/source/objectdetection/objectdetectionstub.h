@@ -19,7 +19,7 @@ class ObjectDetectionStub{
   //modify to use your code
   static int findRectangles(Mat *img, vector<TRectangle> *rect);
   //modify to use your code
-  static Mat getSubImageForRectangle(Mat *img, TRectangle* rect);
+  static Mat getSubImageForRectangle(Mat *img, TRectangle* rect, int& blackPixAdded);
   
   static void show(Mat* img, TRectangle* rect, int pos);
 };
