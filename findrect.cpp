@@ -449,3 +449,18 @@ void getCorners(TRectangle* rectangle, TPoint* p1, TPoint* p2, TPoint* p3, TPoin
 		
 }
 
+int isKonvex(TRectangle *rectangle)
+{
+		double a1,a2,a3,a4;
+		
+		a1=abs(rectangle->getLine(1)->get_angle()-rectangle->getLine(2)->get_angle());
+		a2=abs(rectangle->getLine(2)->get_angle()-rectangle->getLine(3)->get_angle());
+		a3=abs(rectangle->getLine(3)->get_angle()-rectangle->getLine(4)->get_angle());
+		a4=abs(rectangle->getLine(4)->get_angle()-rectangle->getLine(1)->get_angle());
+		
+		if((a1>=180)&&(a2>=180)&&(a3>=180)&&(a4>=180))
+			return 1;
+		else
+			return 0;
+}
+
