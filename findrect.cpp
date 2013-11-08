@@ -123,6 +123,7 @@ void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafe
 							isParallel(*(TLine*)(all->get(resl[3])), *(TLine*)(all->get(resl[0]))) ))
 				{
 					// íàéäåí ÷åòûðåõóãîëüíèê
+					
 					res->setat(new TRectangle(*(TLine*)(all->get(resl[0])),*(TLine*)(all->get(resl[1])),*(TLine*)(all->get(resl[2])),*(TLine*)(all->get(resl[3]))),res->length());
 				}
 			}
@@ -458,7 +459,7 @@ int isKonvex(TRectangle *rectangle)
 		a3=abs(rectangle->getLine(3)->get_angle()-rectangle->getLine(4)->get_angle());
 		a4=abs(rectangle->getLine(4)->get_angle()-rectangle->getLine(1)->get_angle());
 		
-		if((a1>=180)&&(a2>=180)&&(a3>=180)&&(a4>=180))
+		if((a1>=180)||(a2>=180)||(a3>=180)||(a4>=180))
 			return 1;
 		else
 			return 0;
