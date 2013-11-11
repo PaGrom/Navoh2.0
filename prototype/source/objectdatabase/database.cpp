@@ -26,10 +26,39 @@ Database::Database(string folder){
 	file=folder+filenumber+".xml";
 	objects.push_back(DataBaseObject::load(file.c_str()));
 	}
+	fold =folder;
 }
 
 void Database::saveToDatabase(Mat img,Mat histogram, Mat featurePoints){
 	//save one image to the database
+	int databaselength;
+	DataBaseObject obj(-1,-1,img,histogram,featurePoints);
+	
+	string res= fold + "/elements.txt";
+	
+	std::ifstream databaseLengthFile (res.c_str());
+	if(!databaseLengthFile.is_open())
+		return;
+		
+	std::ostringstream stream;
+	string filenumber;
+	string file;
+	databaseLengthFile >> databaselength;
+	
+	filenumber="";
+	databaselength++;
+	stream << databaselength;
+	filenumber= stream.str();
+	file=fold+"/"+filenumber+".xml";
+	databaseLengthFile.close();
+	
+	obj.save(file.c_str());
+	
+	std::ofstream outfile;
+	outfile.open(res.c_str(), std::ofstream::out);
+	outfile << databaselength;
+	outfile.close();
+	
 }
 
 

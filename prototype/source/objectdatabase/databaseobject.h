@@ -18,7 +18,7 @@ public:
 	cv::Mat getImage();
 	cv::Mat gethist();
 	cv::Mat getfeat();
-	void save(char* file);
+	void save(const char* file);
 	static DataBaseObject load(const char* file);
 	
 };

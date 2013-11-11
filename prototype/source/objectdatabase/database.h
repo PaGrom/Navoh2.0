@@ -17,6 +17,7 @@ private:
 	Mat loadsingleHist(int id);
 	Mat loadsingleFeat(int id);
 	vector<DataBaseObject> objects;
+	string fold;
 	
 public:
 	Database();

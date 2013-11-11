@@ -33,7 +33,7 @@
     return feat;
   }
   
-  void DataBaseObject::save(char* file){
+  void DataBaseObject::save(const char* file){
     
 	cv::FileStorage fs;
     fs.open(file,cv::FileStorage::WRITE);
