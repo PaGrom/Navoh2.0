@@ -1,12 +1,12 @@
-#include databaseobject.h
+#include "databaseobject.h"
 
-  DataBaseObject::DataBaseObject(int length,int width,Mat image,Mat histograms, Mat features){
+  DataBaseObject::DataBaseObject(int len,int wid,cv::Mat image,cv::Mat histograms, cv::Mat features){
 
-  this.length = length;	  
-  this.width  = width;
-  this.img    = image;
-  this.hist   = histograms;
-  this.feat   = features;
+  length = len;	  
+  width  = wid;
+  img    = image;
+  hist   = histograms;
+  feat   = features;
   }
   
   
@@ -47,7 +47,7 @@
 	fs.release();  
   }
 
-  DataBaseObject DataBaseObject::load(char* file){
+  DataBaseObject DataBaseObject::load(const char* file){
     
 	cv::FileStorage fs;
 	fs.open(file,cv::FileStorage::READ);

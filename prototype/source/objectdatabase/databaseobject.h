@@ -19,7 +19,7 @@ public:
 	cv::Mat gethist();
 	cv::Mat getfeat();
 	void save(char* file);
-	static DataBaseObject load(char* file);
+	static DataBaseObject load(const char* file);
 	
 };
 

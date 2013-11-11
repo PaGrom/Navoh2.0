@@ -2,7 +2,13 @@
 #ifndef DATABASESAVELOAD
 #define DATABASESAVELOAD
 #include <cv.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdio.h>
+#include <sstream>
 #include "databaseobject.h"
+
 
 using namespace cv;
 
@@ -15,10 +21,10 @@ private:
 public:
 	Database();
 	Database(string folder);
-	static void saveToDatabase(Mat img,Mat histogram, Mat featurePoints);
-	static vector<Mat> loadHistograms();
-	static vector<Mat> loadFeatures();
-	static DataBaseObject getMatchingImage(int id);
+	void saveToDatabase(Mat img,Mat histogram, Mat featurePoints);
+	vector<Mat> loadHistograms();
+	vector<Mat> loadFeatures();
+	DataBaseObject* getMatchingImage(int id);
 	
 };
 
