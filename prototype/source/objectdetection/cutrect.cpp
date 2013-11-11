@@ -13,6 +13,7 @@ cv::Mat CutImage::getSubImage(TRectangle *rect, cv::Mat* img, int& blackPixadded
   getMininalMaxXYCorner(rect->getLine(1),	rect->getLine(2),	rect->getLine(3),  rect->getLine(4), x1,y1,x2,y2);
   
   cv::Mat imgnew = ((*img)(cv::Range(y1,y2),cv::Range(x1,x2)));
+  
   return imgnew;
 
 }
@@ -96,4 +97,11 @@ void getMininalMaxXYCorner(TLine* ax, TLine* bx, TLine* cx, TLine* dx, int &x,in
 	a=maxX;
 	b=maxY;
 }
+
+int CutImage::blackOutside(TRectangle *rect,cv::Mat *img){
+	
+  
+	
+}
+
 

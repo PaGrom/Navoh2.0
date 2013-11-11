@@ -1,6 +1,7 @@
 #include <iostream> 
 
 #include "findrect.h"
+#include <math.h>
 
 const float PI = 3.141592653589;
 
@@ -98,6 +99,10 @@ int isParallel(TLine &l1, TLine &l2)
 
 void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafeVector *res,int n, int cur_i, int maxl)
 {
+	bool onlyOne=true;
+	bool twice =false;
+	bool para1=false, para2=false, para3=false,para4=false;
+	
 	if(n<maxl+1){
 		for(int i=cur_i; i<(all->length()); i++)
 		{
@@ -122,8 +127,49 @@ void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafe
 							isParallel(*(TLine*)(all->get(resl[2])), *(TLine*)(all->get(resl[3]))) || 
 							isParallel(*(TLine*)(all->get(resl[3])), *(TLine*)(all->get(resl[0]))) ))
 				{
+					for(int z=0;z<4;++z){
+						TLine* line=(TLine*) all->get(resl[z]);
+						for(int k=z+1;k<4;++k){
+							if(line->getp1()==((TLine*) all->get(resl[k]))->getp1() || line->getp1()==((TLine*) all->get(resl[k]))->getp2())
+							{
+								if(!onlyOne)
+									twice=true;
+								
+								onlyOne=false;
+							}
+							if(line->getp2()==((TLine*) all->get(resl[k]))->getp1() || line->getp2()==((TLine*) all->get(resl[k]))->getp2())
+							{
+								if(!onlyOne)
+									twice=true;					
+									
+								onlyOne=false;
+							}
+						}
+						if(twice)
+							break;
+					}
 					// íàéäåí ÷åòûðåõóãîëüíèê
-					res->setat(new TRectangle(*(TLine*)(all->get(resl[0])),*(TLine*)(all->get(resl[1])),*(TLine*)(all->get(resl[2])),*(TLine*)(all->get(resl[3]))),res->length());
+					TRectangle* rect=new TRectangle(*(TLine*)(all->get(resl[0])),*(TLine*)(all->get(resl[1])),*(TLine*)(all->get(resl[2])),*(TLine*)(all->get(resl[3])));
+					para1= (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(2))->get_angle()) <10); 
+					para1= para1 && (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
+					para1= para1 && (abs((rect->getLine(2))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
+
+					para2= (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(2))->get_angle()) <10); 
+					para2= para1 && (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(4))->get_angle()) <10);
+					para2= para1 && (abs((rect->getLine(2))->get_angle())-abs((rect->getLine(4))->get_angle()) <10);
+										
+					para3= (abs((rect->getLine(4))->get_angle())-abs((rect->getLine(2))->get_angle()) <10); 
+					para3= para1 && (abs((rect->getLine(4))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
+					para3= para1 && (abs((rect->getLine(2))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
+										
+					para4= (abs((rect->getLine(4))->get_angle())-abs((rect->getLine(1))->get_angle()) <10); 
+					para4= para1 && (abs((rect->getLine(4))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
+				    para4= para1 && (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
+					
+				    
+					if(!twice && !((para1 || para2) || (para3 || para4)))
+					  res->setat(rect,res->length());
+
 				}
 			}
 			else
@@ -372,10 +418,95 @@ void mergeLines(TSafeVector *original, TSafeVector *merged, double dorient, doub
 				
 			}
 		}
-		
-		//printf("%d merged lines\n",merged->length());
-		
 		temp.deleteall();
 		
+}
+
+void getCorners(TRectangle* rectangle, TPoint* p1, TPoint* p2, TPoint* p3, TPoint* p4)
+{
+		double k1,k2,b1,b2, x, y;
+		
+		//p1
+		k1=rectangle->getLine(1)->get_k();
+		b1=rectangle->getLine(1)->get_b();
+		
+		k2=rectangle->getLine(2)->get_k();
+		b2=rectangle->getLine(2)->get_b();
+		
+		if(k1!=k2)
+		{
+				x=(b2-b1)/(k1-k2);
+				y=k1*x+b1;
+				
+				p1->setx((int)(x+0.5));
+				p1->sety((int)(y+0.5));
+				
+		}
+		
+		//p2
+		k1=rectangle->getLine(2)->get_k();
+		b1=rectangle->getLine(2)->get_b();
+		
+		k2=rectangle->getLine(3)->get_k();
+		b2=rectangle->getLine(3)->get_b();
+		
+		if(k1!=k2)
+		{
+				x=(b2-b1)/(k1-k2);
+				y=k1*x+b1;
+				
+				p2->setx((int)(x+0.5));
+				p2->sety((int)(y+0.5));
+		}
+		
+		//p3
+		k1=rectangle->getLine(3)->get_k();
+		b1=rectangle->getLine(3)->get_b();
+		
+		k2=rectangle->getLine(4)->get_k();
+		b2=rectangle->getLine(4)->get_b();
+		
+		if(k1!=k2)
+		{
+				x=(b2-b1)/(k1-k2);
+				y=k1*x+b1;
+				
+				p3->setx((int)(x+0.5));
+				p3->sety((int)(y+0.5));
+		}
+		
+		//p4
+		k1=rectangle->getLine(1)->get_k();
+		b1=rectangle->getLine(1)->get_b();
+		
+		k2=rectangle->getLine(4)->get_k();
+		b2=rectangle->getLine(4)->get_b();
+		
+		if(k1!=k2)
+		{
+				x=(b2-b1)/(k1-k2);
+				y=k1*x+b1;
+				
+				p4->setx((int)(x+0.5));
+				p4->sety((int)(y+0.5));
+				
+		}
+		
+		
+}
+
+int isKonvex(TRectangle *rectangle)
+{
+		double a1,a2,a3,a4;
+		
+		a1=abs(rectangle->getLine(1)->get_angle()-rectangle->getLine(2)->get_angle());
+		a2=abs(rectangle->getLine(2)->get_angle()-rectangle->getLine(3)->get_angle());
+		a3=abs(rectangle->getLine(3)->get_angle()-rectangle->getLine(4)->get_angle());
+		a4=abs(rectangle->getLine(4)->get_angle()-rectangle->getLine(1)->get_angle());
+		
+		if(((a1>=180)||(a2>=180)||(a3>=180)||(a4>=180)))
+			return 1;
+		else
+			return 0;
 }
 

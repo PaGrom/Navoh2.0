@@ -17,5 +17,9 @@ void showRectangles(TSafeVector *recsq);
 
 void mergeLines(TSafeVector *original, TSafeVector *merged, double dorient, double dmaxX, double dmaxY);
 
+void getCorners(TRectangle* rectangle, TPoint* p1, TPoint* p2, TPoint* p3, TPoint* p4);
+
+int isKonvex(TRectangle *rectangle);
+
 #endif /* _findrect_h */
 
