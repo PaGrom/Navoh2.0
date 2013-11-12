@@ -23,8 +23,8 @@ public:
 	Database();
 	Database(string folder);
 	void saveToDatabase(Mat img,Mat histogram, Mat featurePoints);
-	vector<Mat> loadHistograms();
-	vector<Mat> loadFeatures();
+	void loadHistograms(vector<Mat> &hist);
+	void loadFeatures(vector<Mat> &feat);
 	DataBaseObject* getMatchingImage(int id);
 	
 };

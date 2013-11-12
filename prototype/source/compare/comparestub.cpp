@@ -5,10 +5,11 @@
  * @see compare.h
  */
 int CompareStub::compare(Mat *img, vector<Mat> *hists, vector<Mat> *features,int& blackPixAdded){
-  if(!hists->empty()&&!features->empty()&&!img->rows==0&&!img->cols==0)
-  return Compare::compare(img,hists,features,blackPixAdded);
+  if(!hists->empty()&&!features->empty()&&!img->rows==0&&!img->cols==0){
+	  return Compare::compare(img,hists,features,blackPixAdded);
+  }
   else
-  return -1;
+    return -1;
 }
 /**
  * comparism of histograms returning a list of imagepositions which fullfill the criterion

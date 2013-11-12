@@ -47,15 +47,22 @@ int main (int argc, char** argv){
 			  sprintf(path,"testimg/%d%d.ppm",i,k);
 			  data.saveImage(path,subImage);
 			}
-			if(imgMatch>-1)
-				ObjectDetectionStub::show(img,&rect[i], vectorsize);
+			if(imgMatch>-1){
+						printf("found match\n");
+						imshow("Matching image",subImage);
+						waitKey(100);
+			}
+			
 		}
-	    imshow("Working til here",*img);
+	    imshow("Stream",*img);
 		
 		printf("The rectangles : %d\n.",vectorsize);
 		//printf("There are %lu rectangles \n", rect->size());
-		if(imgMatch>0)
-		waitKey(0);
+		if(imgMatch>0){
+			printf("found match\n");
+			waitKey(0);
+		
+		}
 			
 		waitKey(1);
 		//sleep(1);

@@ -6,8 +6,10 @@ void stubload(vector<Mat>& histograms,vector<Mat>& featurepoints);
 
 
 DatabaseStub::DatabaseStub(){
-	 // data("test");
-	  //stubload(hists,feats);
+	 string folder="testdatabase";
+	 data=Database(folder);
+	 data.loadHistograms(hists);
+	 data.loadFeatures(feats);
   }
 //modify to use your code
    vector<Mat>* DatabaseStub::loadFeatures(){

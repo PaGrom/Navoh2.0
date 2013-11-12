@@ -15,7 +15,7 @@ using namespace cv;
 class DatabaseStub{
 private:
   
-  //Database data;
+  Database data;
   vector<Mat> feats;
   vector<Mat> hists;
   

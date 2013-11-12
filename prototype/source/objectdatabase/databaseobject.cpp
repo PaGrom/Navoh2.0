@@ -1,4 +1,7 @@
 #include "databaseobject.h"
+#include <iostream>
+
+using namespace std;
 
   DataBaseObject::DataBaseObject(int len,int wid,cv::Mat image,cv::Mat histograms, cv::Mat features){
 
@@ -51,7 +54,9 @@
     
 	cv::FileStorage fs;
 	fs.open(file,cv::FileStorage::READ);
-	  
+	
+	if (!fs.isOpened()) {std::cout << "unable to open file storage!" << std::endl;}
+	
 	int length;
 	int width;
 	cv::Mat img;
@@ -65,7 +70,11 @@
 	fs["FEAT"] >> feat;
 	
 	fs.release();
+	cout << length << " and " << width << endl;
 	
+	cout<<"type is :" << img.type() << " ? "<< CV_32F << "|"<<img.rows << ", " << img.cols << endl; 
+		
+	cout<<"type is :" << hist.type() << " ? "<< CV_32F << "|"<<hist.rows << ", " << hist.cols << endl; 
 	return DataBaseObject(length,width,img,hist,feat);
 	  
   }

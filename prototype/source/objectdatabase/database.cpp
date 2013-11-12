@@ -18,12 +18,15 @@ Database::Database(string folder){
 	databaseLengthFile >> databaselength;
 	
 	objects = vector<DataBaseObject>();
-	for(int i=0; i<databaselength ;++i)
+	for(int i=1; i<databaselength ;++i)
 	{
 	filenumber="";
+	stream.str("");
+	stream.clear();
 	stream << i;
 	filenumber= stream.str();
-	file=folder+filenumber+".xml";
+	file=folder+"/"+filenumber+".xml";
+	std::cout<<file<<std::endl;
 	objects.push_back(DataBaseObject::load(file.c_str()));
 	}
 	fold =folder;
@@ -62,20 +65,19 @@ void Database::saveToDatabase(Mat img,Mat histogram, Mat featurePoints){
 }
 
 
-vector<Mat> Database::loadHistograms(){
-	vector <Mat> hist;
+void Database::loadHistograms(vector<Mat> &hist){
+	
 	for (unsigned int i=0; i<objects.size();++i){
 	  hist.push_back(objects[i].gethist());
 	}
-	return hist;
 }
 
-vector<Mat> Database::loadFeatures(){
-	vector <Mat> feat;
+void Database::loadFeatures(vector<Mat> &feat){
+	
 	for (unsigned int i=0; i<objects.size();++i){
 	  feat.push_back(objects[i].getfeat());
 	}
-	return feat;
+	
 }
 
 DataBaseObject* Database::getMatchingImage(int id){
