@@ -7,6 +7,7 @@
 #include "objectlibs/tline.h"
 #include "objectlibs/trectangle.h"
 #include "objectlibs/tsafevector.h"
+#include "rectchecks.h"
 
 void getDXY(TLine *l, float *dx, float *dy, int *x1, int *x2, int *y1, int *y2);
 int isCrossed(TLine &l1, TLine &l2);

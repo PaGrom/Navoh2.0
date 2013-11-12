@@ -3,6 +3,7 @@
 #include "findrect.h"
 #include <math.h>
 
+
 const float PI = 3.141592653589;
 
 void getDXY(TLine *l, float *dx, float *dy, int *x1, int *x2, int *y1, int *y2)
@@ -101,8 +102,7 @@ void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafe
 {
 	bool onlyOne=true;
 	bool twice =false;
-	bool para1=false, para2=false, para3=false,para4=false;
-	
+
 	if(n<maxl+1){
 		for(int i=cur_i; i<(all->length()); i++)
 		{
@@ -151,24 +151,7 @@ void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafe
 					// íàéäåí ÷åòûðåõóãîëüíèê
 					
 					TRectangle* rect=new TRectangle(*(TLine*)(all->get(resl[0])),*(TLine*)(all->get(resl[1])),*(TLine*)(all->get(resl[2])),*(TLine*)(all->get(resl[3])));
-					para1= (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(2))->get_angle()) <10); 
-					para1= para1 && (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
-					para1= para1 && (abs((rect->getLine(2))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
-
-					para2= (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(2))->get_angle()) <10); 
-					para2= para1 && (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(4))->get_angle()) <10);
-					para2= para1 && (abs((rect->getLine(2))->get_angle())-abs((rect->getLine(4))->get_angle()) <10);
-										
-					para3= (abs((rect->getLine(4))->get_angle())-abs((rect->getLine(2))->get_angle()) <10); 
-					para3= para1 && (abs((rect->getLine(4))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
-					para3= para1 && (abs((rect->getLine(2))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
-										
-					para4= (abs((rect->getLine(4))->get_angle())-abs((rect->getLine(1))->get_angle()) <10); 
-					para4= para1 && (abs((rect->getLine(4))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
-				    para4= para1 && (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);
-					
-				    
-					if(!twice && !((para1 || para2) || (para3 || para4)))
+					if(!twice && RectChecks::checkAnglesOfRect(rect))
 					  res->setat(rect,res->length());
 
 				}
