@@ -13,7 +13,7 @@
 
 using namespace cv;
 
-#define MAXDIST 50
+#define MAXDIST 70
 #define MAXFEATUREPOINTS 200
 
 class FeatureMatching{

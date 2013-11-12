@@ -35,13 +35,16 @@ Database::Database(string folder){
 void Database::saveToDatabase(Mat img,Mat histogram, Mat featurePoints){
 	//save one image to the database
 	int databaselength;
-	DataBaseObject obj(-1,-1,img,histogram,featurePoints);
 	
 	string res= fold + "/elements.txt";
 	
+		
 	std::ifstream databaseLengthFile (res.c_str());
+	
+		
 	if(!databaseLengthFile.is_open())
 		return;
+	
 		
 	std::ostringstream stream;
 	string filenumber;
@@ -50,12 +53,23 @@ void Database::saveToDatabase(Mat img,Mat histogram, Mat featurePoints){
 	
 	filenumber="";
 	databaselength++;
+	
 	stream << databaselength;
 	filenumber= stream.str();
-	file=fold+"/"+filenumber+".xml";
+	
+		
+	
+	string imgpath= fold+"/pic/"+filenumber+".ppm";
+	cv::imwrite(imgpath,img);
+	
+	file=fold+"/data/"+filenumber+".xml";
 	databaseLengthFile.close();
 	
+	DataBaseObject obj(-1,-1,imgpath,histogram,featurePoints);
+	
 	obj.save(file.c_str());
+	
+		
 	
 	std::ofstream outfile;
 	outfile.open(res.c_str(), std::ofstream::out);

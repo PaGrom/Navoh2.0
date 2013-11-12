@@ -149,6 +149,7 @@ void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafe
 							break;
 					}
 					// íàéäåí ÷åòûðåõóãîëüíèê
+					
 					TRectangle* rect=new TRectangle(*(TLine*)(all->get(resl[0])),*(TLine*)(all->get(resl[1])),*(TLine*)(all->get(resl[2])),*(TLine*)(all->get(resl[3])));
 					para1= (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(2))->get_angle()) <10); 
 					para1= para1 && (abs((rect->getLine(1))->get_angle())-abs((rect->getLine(3))->get_angle()) <10);

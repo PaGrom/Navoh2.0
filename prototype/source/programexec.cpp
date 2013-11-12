@@ -26,6 +26,7 @@ int main (int argc, char** argv){
 	int vectorsize;
 	int numberOfImages;
 	int imgMatch=-1;
+	//int oldmatch=-1;
 	int k=0;
 	
 	hists= data.loadHistograms();//dummy
@@ -47,10 +48,11 @@ int main (int argc, char** argv){
 			  sprintf(path,"testimg/%d%d.ppm",i,k);
 			  data.saveImage(path,subImage);
 			}
-			if(imgMatch>-1){
-						printf("found match\n");
-						imshow("Matching image",subImage);
-						waitKey(100);
+			std::cout<<"                               imgmatch ="<<imgMatch<<std::endl;
+			if(imgMatch > -1){
+				ObjectDetectionStub::show(img,&rect[i],0);
+				//imshow("Matching image",subImage);
+						waitKey(1);
 			}
 			
 		}

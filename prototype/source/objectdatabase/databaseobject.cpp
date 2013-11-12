@@ -3,13 +3,14 @@
 
 using namespace std;
 
-  DataBaseObject::DataBaseObject(int len,int wid,cv::Mat image,cv::Mat histograms, cv::Mat features){
+  DataBaseObject::DataBaseObject(int len,int wid,string image,cv::Mat histograms, cv::Mat features){
 
   length = len;	  
   width  = wid;
   img    = image;
   hist   = histograms;
   feat   = features;
+  
   }
   
   
@@ -25,7 +26,7 @@ using namespace std;
   
   
   cv::Mat DataBaseObject::getImage(){
-    return img;
+    return cv::imread(img.c_str());
   }
   
   cv::Mat DataBaseObject::gethist(){
@@ -40,7 +41,10 @@ using namespace std;
     
 	cv::FileStorage fs;
     fs.open(file,cv::FileStorage::WRITE);
-    
+    if (!(fs.isOpened())){
+    	std::cout<<"fail"<<std::endl;
+    	return;
+    }
     fs << "LENGTH" <<length;
     fs << "HIGHT" << width;
     fs << "IMAGE" << img;
@@ -59,7 +63,7 @@ using namespace std;
 	
 	int length;
 	int width;
-	cv::Mat img;
+	string img;
 	cv::Mat hist;
 	cv::Mat feat;
 	
@@ -70,11 +74,7 @@ using namespace std;
 	fs["FEAT"] >> feat;
 	
 	fs.release();
-	cout << length << " and " << width << endl;
 	
-	cout<<"type is :" << img.type() << " ? "<< CV_32F << "|"<<img.rows << ", " << img.cols << endl; 
-		
-	cout<<"type is :" << hist.type() << " ? "<< CV_32F << "|"<<hist.rows << ", " << hist.cols << endl; 
 	return DataBaseObject(length,width,img,hist,feat);
 	  
   }

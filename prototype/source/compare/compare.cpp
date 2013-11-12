@@ -1,5 +1,8 @@
 #include "compare.h"
 #include <cstdio>
+
+
+
 /**
  * compares in one run all histograms and for possible matches also the features.
  */
@@ -18,6 +21,7 @@ int Compare::compare(Mat *img, vector<Mat> *histograms, vector<Mat> *features,in
     if(hist==Histogram((*histograms)[i]))
     {  
      //printf("hists are eq\n");
+     std::cout<<"                     hist comparism succeded"<< std::endl;
      matches=FeatureMatching::matchFeatures(des,(*features)[i]);
       if(matches.size()>k)
       {
@@ -27,6 +31,7 @@ int Compare::compare(Mat *img, vector<Mat> *histograms, vector<Mat> *features,in
     }
     
   }
+  std::cout<<"                        matches : "<< k <<std::endl;
   if(k>MINMATCHES)
   return j;
   else

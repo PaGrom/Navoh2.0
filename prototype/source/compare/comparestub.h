@@ -2,6 +2,8 @@
 #ifndef COMPARESTUB
 #define COMPARESTUB
 
+
+
 #include <cv.h> 
 #include <cstdio>
 #include "histogramcompare/histogram.h"
