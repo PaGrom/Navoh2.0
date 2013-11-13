@@ -7,8 +7,11 @@ void stubload(vector<Mat>& histograms,vector<Mat>& featurepoints);
 
 DatabaseStub::DatabaseStub(){
 	 string folder="testdatabase";
+	 std::cout<<"line :"<<__LINE__<<std::endl;
 	 data=Database(folder);
+	 std::cout<<"line :"<<__LINE__<<std::endl;
 	 data.loadHistograms(hists);
+	 std::cout<<"line :"<<__LINE__<<std::endl;
 	 data.loadFeatures(feats);
   }
 //modify to use your code

@@ -5,7 +5,7 @@
 #include "featurematching/featurematching.h"
 #include "histogramcompare/histogram.h"
 
-#define MINMATCHES 30
+#define MINMATCHES 20
 
 class Compare{
   

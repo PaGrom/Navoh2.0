@@ -60,11 +60,7 @@ int main (int argc, char** argv){
 		
 		printf("The rectangles : %d\n.",vectorsize);
 		//printf("There are %lu rectangles \n", rect->size());
-		if(imgMatch>0){
-			printf("found match\n");
-			waitKey(0);
 		
-		}
 			
 		waitKey(1);
 		//sleep(1);

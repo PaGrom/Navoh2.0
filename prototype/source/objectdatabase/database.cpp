@@ -25,7 +25,7 @@ Database::Database(string folder){
 	stream.clear();
 	stream << i;
 	filenumber= stream.str();
-	file=folder+"/"+filenumber+".xml";
+	file=folder+"/data/"+filenumber+".xml";
 	std::cout<<file<<std::endl;
 	objects.push_back(DataBaseObject::load(file.c_str()));
 	}

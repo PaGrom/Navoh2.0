@@ -26,9 +26,7 @@ int ObjectDetectionStub::findRectangles(Mat* img,vector<TRectangle> *rect){
 
   //modify to use your code
    Mat ObjectDetectionStub::getSubImageForRectangle(Mat *img,TRectangle* rect, int &blackPixAdded){
-	   Mat rev= (*img).clone();
-	   ObjectDetectionStub::show(&rev,rect, 0);
-	   Mat subimg=CutImage::getSubImage(rect,&rev,blackPixAdded);
+	   Mat subimg=CutImage::getSubImage(rect,img,blackPixAdded);
 	  return subimg;
   }
    
