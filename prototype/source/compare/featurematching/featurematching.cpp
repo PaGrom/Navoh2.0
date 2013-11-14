@@ -16,6 +16,22 @@ Mat FeatureMatching::detectAndDiscribeFeatures(Mat &img, vector<KeyPoint> &key){
   return desc;
 }
 
+Mat FeatureMatching::detectAndDiscribeFeatures(Mat &img, vector<KeyPoint> &key, int threashold){
+
+  Mat desc;
+  vector<KeyPoint> feat;
+  ORB orb(threashold,
+          1.2f,
+          8,
+          31,
+          0,
+          2,
+          ORB::HARRIS_SCORE,
+          31);
+  orb(img,Mat(),key,desc,false);
+  return desc;
+}
+
 vector<DMatch> FeatureMatching::matchFeatures(Mat &img1,Mat &img2){
 
   vector<DMatch> matches;
