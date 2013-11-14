@@ -33,7 +33,7 @@ bool operator==(const Histogram& left, const Histogram& right) {
   
 	//printf("Type %d and %d, should be %d \n", left.hist.type(),right.hist.type(), CV_32F);
   double x =compareHist(left.hist,right.hist,CV_COMP_BHATTACHARYYA);
-  return (x<0.6);
+  return (x<=0.7);
 }
 
 void Histogram::eraseBlackPix(int& blackPixAdded){

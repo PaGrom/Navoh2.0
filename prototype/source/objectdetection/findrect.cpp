@@ -1,6 +1,7 @@
 #include <iostream> 
 
 #include "findrect.h"
+#include "objectdetectionstub.h"
 #include <math.h>
 
 
@@ -151,7 +152,7 @@ void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafe
 					// íàéäåí ÷åòûðåõóãîëüíèê
 					
 					TRectangle* rect=new TRectangle(*(TLine*)(all->get(resl[0])),*(TLine*)(all->get(resl[1])),*(TLine*)(all->get(resl[2])),*(TLine*)(all->get(resl[3])));
-					if(!twice && RectChecks::checkAnglesOfRect(rect))
+					if(!twice && (RectChecks::checkAnglesOfRect(rect) || !ObjectDetectionStub::checkAngles))
 					  res->setat(rect,res->length());
 
 				}

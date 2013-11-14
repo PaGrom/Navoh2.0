@@ -6,11 +6,17 @@
 #include <iostream>
 
 int main (int argc, char** argv){
+	
+	bool oldmatch=false;
+	bool roundmatch =false;
 	bool loop=true;
 	LoadImageStub load(0);
 	
 	if(argc>1)
 	  load=LoadImageStub(argv[1]);
+	
+	if(argc>2)
+		ObjectDetectionStub::showWhat= argv[2][0]-'0';
 	
 	DatabaseStub data;
 	Mat *img;
@@ -49,13 +55,28 @@ int main (int argc, char** argv){
 			  data.saveImage(path,subImage);
 			}
 			std::cout<<"                               imgmatch ="<<imgMatch<<std::endl;
-			if(imgMatch > -1){
-				ObjectDetectionStub::show(img,&rect[i],0);
+			if(imgMatch > -1 && ObjectDetectionStub::showWhat>0){
+				ObjectDetectionStub::show(img,&rect[i],255,0,0);
 				//imshow("Matching image",subImage);
+				oldmatch=true;
+				roundmatch=true;
 						waitKey(1);
 			}
+			else if(oldmatch && !roundmatch){
+				resize(subImage,subImage,Size(122,173));
+				imgMatch = CompareStub::compare(&subImage,hists,featur,blackPixAdded);
+				if(imgMatch > -1 && ObjectDetectionStub::showWhat>0){
+								ObjectDetectionStub::show(img,&rect[i],255,0,0);
+								//imshow("Matching image",subImage);
+								waitKey(1);
+								roundmatch=true;
+				}
+			}
+			
 			
 		}
+		oldmatch=roundmatch;
+		roundmatch=false;
 	    imshow("Stream",*img);
 		
 		printf("The rectangles : %d\n.",vectorsize);

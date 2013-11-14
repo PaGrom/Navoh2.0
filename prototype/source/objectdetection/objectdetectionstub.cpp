@@ -5,6 +5,8 @@
 vector<KeyPoint> ObjectDetectionStub::key;
 Mat ObjectDetectionStub::desc1;
 int ObjectDetectionStub::detectRect=0;
+int ObjectDetectionStub::showWhat=0;
+bool ObjectDetectionStub::checkAngles = true;
 
 int ObjectDetectionStub::findRectangles(Mat* img,vector<TRectangle> *rect){
 
@@ -24,10 +26,15 @@ int ObjectDetectionStub::findRectangles(Mat* img,vector<TRectangle> *rect){
 	   
 	   (*rect)[i] = *((TRectangle*) rectangles.get(i));
 	   //rect->push_back(*((TRectangle*) rectangles.get(i)));
+	   if(ObjectDetectionStub::showWhat>1)
+		   ObjectDetectionStub::show(img,((TRectangle*) rectangles.get(i)),0,255,0);
+	   
   }
+  if(ObjectDetectionStub::showWhat>2)
+	  ObjectDetectionStub::show(img,lines,0,0,255);
   if(i<detectRect)
   {
-    i=ObjectDetectionStub::tuning(img,rect);
+    i=ObjectDetectionStub::tuning(img,rect,lines);
   }
   else
 	 desc1= FeatureMatching::detectAndDiscribeFeatures(*img,key,10);
@@ -43,40 +50,64 @@ int ObjectDetectionStub::findRectangles(Mat* img,vector<TRectangle> *rect){
 	  return subimg;
   }
    
-   void ObjectDetectionStub::show(Mat* img, TRectangle* rect, int pos){
+   void ObjectDetectionStub::show(Mat* img, TRectangle* rect, int red, int green , int blue){
 	   
 	   for(int j=1; j<5; j++){
 	   						line(*img, Point(rect->getLine(j)->getp1()->getx(),
 	   								rect->getLine(j)->getp1()->gety()), 
 	   										Point(rect->getLine(j)->getp2()->getx(),
 	   												rect->getLine(j)->getp2()->gety()), 
-	   							CV_RGB(255,0,0), //color of the lines
+	   							CV_RGB(red,green,blue), //color of the lines
 	   							4, //thickness
 	   							8, 0 );
 	   }
 	   
    }
    
-int ObjectDetectionStub::tuning(Mat* img, vector<TRectangle> *rect){
+void ObjectDetectionStub::show(Mat* img,TSafeVector &lines,int red, int green, int blue){
+	for(int i=0; i< lines.length(); ++i){
+		TLine* tline=(TLine*) lines.get(i);
+		line(*img,Point((tline->getp1())->getx(),(tline->getp1())->gety()),
+				  Point((tline->getp2())->getx(),(tline->getp2())->gety()),
+				  CV_RGB(red,green,blue),
+				  4,
+				  8,0);
+		
+	}
+}
+   
+int ObjectDetectionStub::tuning(Mat* img, vector<TRectangle> *rect, TSafeVector &lines){
 	
+	int i;
+	TSafeVector rectangles;
 	vector<KeyPoint> key2;
+	
 	Mat desc2= FeatureMatching::detectAndDiscribeFeatures(*img,key2,10);
 	vector<DMatch> matches= FeatureMatching::matchFeatures(desc2,desc1);
+	
 	if(distanceKeypoints(key,key2,matches)<MAXDISTKEYPOINTS){
 		
-	
+		ObjectDetectionStub::checkAngles = false;
+		
+		calcRectangles(&lines,&rectangles);
+		for(i=0; i<rectangles.length();++i){
+			   
+			   (*rect)[i] = *((TRectangle*) rectangles.get(i));
+		
+		}
+		
+		ObjectDetectionStub::checkAngles =true;
 	}
 	
 	key=key2;
 	desc1=desc2;
 	
-	return 0;
+	return i;
 
 }
 
 int ObjectDetectionStub::distanceKeypoints(vector<KeyPoint> x, vector<KeyPoint> y,vector<DMatch> &matches){
 	
-	double dist=0;
 	double oldMidX=0,oldMidY=0,NewMidX=0,NewMidY=0;
 	
 	double i;
