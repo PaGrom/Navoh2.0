@@ -4,7 +4,7 @@
 
  LoadImageStub::LoadImageStub(int dev){
    nav= Navoh();
-   nav.captureFromVideo("test2.mp4");
+   nav.capture(0);
  }
  
  LoadImageStub::LoadImageStub(char* file){

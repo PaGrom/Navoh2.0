@@ -17,6 +17,7 @@ void Navoh::loadImageFromFile(std::string imageName) {
   cap.set(CV_CAP_PROP_FRAME_WIDTH, 320);
   cap.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
 }
+
 void Navoh::capture(int devNumber){
 	  cap = cv::VideoCapture(devNumber);
 	  if (!cap.isOpened()) {
@@ -26,6 +27,7 @@ void Navoh::capture(int devNumber){
 	  cap.set(CV_CAP_PROP_FRAME_WIDTH, 320);
 	  cap.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
 }
+
 void Navoh::captureFromVideo(std::string file){
 	  cap = cv::VideoCapture(file);
 	  if (!cap.isOpened()) {
