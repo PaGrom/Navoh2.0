@@ -22,7 +22,7 @@ private:
 	static vector<KeyPoint> key;
 	static int detectRect;
 	static int tuning(Mat* img, vector<TRectangle> *rect, TSafeVector &lines);
-	static int distanceKeypoints(vector<KeyPoint> x, vector<KeyPoint> y,vector<DMatch> &matches);
+	static int distanceKeypoints(vector<KeyPoint> x, vector<KeyPoint> y,vector<DMatch> &matches,double &avgdist1, double &avgdist2);
 	
 	
 public: 
