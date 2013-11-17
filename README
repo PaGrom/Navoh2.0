@@ -5,3 +5,39 @@ Dependencies:
         Arch Linux: sudo pacman -S opencv
         Mac OSX: sudo port install opencv
 
+Databasetool:
+	The databasetool automatically generates the xml files the prototype needs in its database.
+	
+	Installation:
+		To install the databasetool run the "make" command on the makefile located inside of the source folder.
+		Afterwards you may run "make clean" on it. This will remove only the .o files not the executable.
+		
+	Usage:
+		To use the tool run the executable which after the installation will be located inside the debug folder.
+		As arguments to this function you have to specify the paths to the images you want to include in the database.
+		You may give the tool as many paths at once as you like.
+		Example: ./databasetool ./testimage1.ppm ./testimage2.ppm
+		
+Prototype:
+	The prototype is the prototype for the targeted software. It contains some special features for debugging purposes.
+	
+	Installation:
+		To install the prototype run the "make" command on the makefile in the prototype folder. Make sure that in the 
+		debug folder there is at least an equivalent folder structure as in the source folder (every folder that exists 
+		in source/ has to exist in debug/) and that a testimage folder exists. 
+		
+	Execution:
+		There are three ways to execute the executable in the debug folder:
+			1) without any arguments to it( ./navoh2.0) which will make the program capture the video, used for 
+			   recognition of keypoints in the database, form the webcam of the device.
+			   
+			2) with one argument to it (./navoh2.0 testvideo.mp4) which is the path to a video file forexample an mp4 file.
+			   This will make the program use the specified video file to detect rectangles and match them with images in 
+			   the database.
+			
+			3) with two arguments to it (./navoh2.0 testvideo.mp4 3) where the last parameter is a number which specifies 
+			   what we want to draw on the shown picture additionally to the functionality of way 2.). 0 is draw nothing,
+			   1 is draw the matching rectangles(red), 2 is draw the matching rectangles and the detected rectangles(green),
+			   3 is draw the lines(blue) additionally to the other two drawn parts (Note : the matching rectangles will draw
+			   over the dected rectangle that is matched while the lines will also at the moment draw over detected rectangle
+			   lines making them invisible).  
