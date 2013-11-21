@@ -4,6 +4,7 @@
 #include "objectdetectionstub.h"
 #include <math.h>
 
+int positionOfRect=0;
 
 const float PI = 3.141592653589;
 
@@ -99,46 +100,46 @@ int isParallel(TLine &l1, TLine &l2)
   }
 }
 
-void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafeVector *res,int n, int cur_i, int maxl)
+void findConLine(vector<TLine*> *all, int li, TPoint *p1, int *resl, int cnt, vector<TRectangle> *res,int n, int cur_i, int maxl)
 {
   bool onlyOne=true;
   bool twice =false;
 
   if(n<maxl+1){
-    for(int i=cur_i; i<(all->length()); i++)
+    for(unsigned int i=cur_i; i<(all->size()); i++)
     {
-      if((i!=li) && ( (*(((TLine*)(all->get(i)))->getp1()) == *p1 ) || (*(((TLine*)(all->get(i)))->getp2()) == *p1)))
+      if(((int)i!=li) && (*((*all)[i]->getp1()) == *p1  || *((*all)[i]->getp2()) == *p1))
       {
         resl[cnt] = i;
-        if(*(((TLine*)(all->get(i)))->getp1())==*p1)
-          findConLine(all, i, ((TLine*)(all->get(i)))->getp2(), resl, cnt+1, res, n+1,cur_i,maxl);
+        if(*((*all)[i]->getp1())==*p1)
+          findConLine(all, i, ((*all)[i])->getp2(), resl, cnt+1, res, n+1,cur_i,maxl);
         else
-          findConLine(all, i, ((TLine*)(all->get(i)))->getp1(), resl, cnt+1, res, n+1,cur_i,maxl);
+          findConLine(all, i, ((*all)[i])->getp1(), resl, cnt+1, res, n+1,cur_i,maxl);
       }
     }
   }
   else{
-    if((li==resl[0]) && (*(((TLine*)(all->get(resl[0])))->getp2())==*p1))
+    if((li==resl[0]) && (*((*all)[resl[0]]->getp2())==*p1))
     {
       if(maxl==4)
       {
-        if(     !(  isCrossed(*(TLine*)(all->get(resl[0])), *(TLine*)(all->get(resl[2]))) || isCrossed(*(TLine*)(all->get(resl[1])), *(TLine*)(all->get(resl[3])))) 
-          && !(  isParallel(*(TLine*)(all->get(resl[0])), *(TLine*)(all->get(resl[1]))) || 
-              isParallel(*(TLine*)(all->get(resl[1])), *(TLine*)(all->get(resl[2]))) || 
-              isParallel(*(TLine*)(all->get(resl[2])), *(TLine*)(all->get(resl[3]))) || 
-              isParallel(*(TLine*)(all->get(resl[3])), *(TLine*)(all->get(resl[0]))) ))
+        if(     !(  isCrossed(*(*all)[resl[0]], *(*all)[resl[2]]) || isCrossed(*(*all)[resl[1]], *(*all)[resl[3]])) 
+          && !(  isParallel(*(*all)[resl[0]],*(*all)[resl[1]]) || 
+              isParallel(*(*all)[resl[1]], *(*all)[resl[2]]) || 
+              isParallel(*(*all)[resl[2]], *(*all)[resl[3]]) || 
+              isParallel(*(*all)[resl[3]], *(*all)[resl[0]]) ))
         {
           for(int z=0;z<4;++z){
-            TLine* line=(TLine*) all->get(resl[z]);
+            TLine* line=(*all)[resl[z]];
             for(int k=z+1;k<4;++k){
-              if(line->getp1()==((TLine*) all->get(resl[k]))->getp1() || line->getp1()==((TLine*) all->get(resl[k]))->getp2())
+              if(line->getp1()==((*all)[resl[k]])->getp1() || line->getp1()==(*all)[resl[k]]->getp2())
               {
                 if(!onlyOne)
                   twice=true;
                 
                 onlyOne=false;
               }
-              if(line->getp2()==((TLine*) all->get(resl[k]))->getp1() || line->getp2()==((TLine*) all->get(resl[k]))->getp2())
+              if(line->getp2()==(*all)[resl[k]]->getp1() || line->getp2()==(*all)[resl[k]]->getp2())
               {
                 if(!onlyOne)
                   twice=true;          
@@ -151,40 +152,44 @@ void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafe
           }
           // íàéäåí ÷åòûðåõóãîëüíèê
           
-          TRectangle* rect=new TRectangle(*(TLine*)(all->get(resl[0])),*(TLine*)(all->get(resl[1])),*(TLine*)(all->get(resl[2])),*(TLine*)(all->get(resl[3])));
-          if(!twice && (RectChecks::checkAnglesOfRect(rect) || !ObjectDetectionStub::checkAngles))
-            res->setat(rect,res->length());
+          TRectangle rect=*(new TRectangle(*(*all)[resl[0]],*(*all)[resl[1]],*(*all)[resl[2]],*(*all)[resl[3]]));
+          if(!twice && (RectChecks::checkAnglesOfRect(&rect) || !ObjectDetectionStub::checkAngles)){
+        	  (*res)[positionOfRect]=rect;
+        	  positionOfRect++;
+          }
+            
 
         }
       }
       else
       {
-        if(     !(isParallel(*(TLine*)(all->get(resl[0])), *(TLine*)(all->get(resl[1]))) || 
-            isParallel(*(TLine*)(all->get(resl[1])), *(TLine*)(all->get(resl[2]))) || 
-            isParallel(*(TLine*)(all->get(resl[2])), *(TLine*)(all->get(resl[0]))) ))
-        {
+        
           // íàéäåí òðåõóãîëüíèê
           //res->setat(new Triangle(*(TLine*)(all->get(resl[0])),*(TLine*)(all->get(resl[1])),*(TLine*)(all->get(resl[2]))),res->length());
-        }
+        
       }
     }
   }
 }
 
-void calcRectangles(TSafeVector *linesq, TSafeVector *recsq)
+int calcRectangles(vector<TLine*> *linesq, vector<TRectangle> *recsq)
 {
-  for(int i=0; i<(linesq->length()); i++)
+	
+  positionOfRect=0;
+  
+  for(unsigned int i=0; i<(linesq->size()); i++)
   {
     int resl[5];
     resl[0] = i;
     int rescnt = 1;
-    findConLine(linesq, i, ((TLine*)(linesq->get(i)))->getp2(), resl, rescnt, recsq, 1, i,4);
+    findConLine(linesq, i, ((*linesq)[i])->getp2(), resl, rescnt, recsq, 1, i,4);
   }
-  
+  return positionOfRect;
 }
 
 void showRectangles(TSafeVector *recsq)
 {
+	
   for(int i=0; i<(recsq->length()); i++)
   {
     printf("Rectangle %d: ",i+1);

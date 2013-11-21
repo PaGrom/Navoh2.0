@@ -16,10 +16,11 @@ int ObjectDetectionStub::findRectangles(Mat* img,vector<TRectangle> *rect){
   Mat grey;
   cvtColor(*img, grey, CV_BGR2GRAY);
    
-  TSafeVector lines, rectangles,merged;
+  vector<TLine*> lines;
+  TSafeVector  rectangles,merged;
   LinesFromMat(&grey,&lines);
    //mergeLines(&lines,&merged, 5, 10,10);
-  calcRectangles(&lines,&rectangles);
+  int size=calcRectangles(&lines,rect);
   //DrawRect(img,&rectangles,CV_RGB(0,255,0));
    //printf("%d \n", rectangles.length());
   
@@ -31,17 +32,17 @@ int ObjectDetectionStub::findRectangles(Mat* img,vector<TRectangle> *rect){
   }
   else{
    desc1= FeatureMatching::detectAndDiscribeFeatures(*img,key,10);
-   for(i=0; i<rectangles.length();++i){
+   for(i=0; i<rect->size();++i){
         
-        (*rect)[i] = *((TRectangle*) rectangles.get(i));
+        //(*rect)[i] = *((TRectangle*) rectangles.get(i));
         //rect->push_back(*((TRectangle*) rectangles.get(i)));
         if(ObjectDetectionStub::showWhat>1)
           ObjectDetectionStub::show(img,((TRectangle*) rectangles.get(i)),0,255,0);
         
      }
   }
-  detectRect=i;
-  return i;
+  detectRect=size;
+  return size;
 }
 
 
@@ -65,9 +66,9 @@ int ObjectDetectionStub::findRectangles(Mat* img,vector<TRectangle> *rect){
      
    }
    
-void ObjectDetectionStub::show(Mat* img,TSafeVector &lines,int red, int green, int blue){
-  for(int i=0; i< lines.length(); ++i){
-    TLine* tline=(TLine*) lines.get(i);
+void ObjectDetectionStub::show(Mat* img,vector<TLine*> &lines,int red, int green, int blue){
+  for(int i=0; i< lines.size(); ++i){
+    TLine* tline=lines[i];
     line(*img,Point((tline->getp1())->getx(),(tline->getp1())->gety()),
           Point((tline->getp2())->getx(),(tline->getp2())->gety()),
           CV_RGB(red,green,blue),
@@ -77,7 +78,7 @@ void ObjectDetectionStub::show(Mat* img,TSafeVector &lines,int red, int green, i
   }
 }
    
-int ObjectDetectionStub::tuning(Mat* img, vector<TRectangle> *rect, TSafeVector &lines){
+int ObjectDetectionStub::tuning(Mat* img, vector<TRectangle> *rect, vector<TLine*> &lines){
   
   int i;
   
@@ -94,7 +95,7 @@ int ObjectDetectionStub::tuning(Mat* img, vector<TRectangle> *rect, TSafeVector 
     ObjectDetectionStub::checkAngles = false;
     double resolution= avgdist2/avgdist1;
     
-    calcRectangles(&lines,&rectangles);
+    calcRectangles(&lines,rect);
     
     for(i=0; i<rectangles.length();++i){
          

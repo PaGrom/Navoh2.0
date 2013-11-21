@@ -10,7 +10,7 @@
 
 using namespace cv;
 
-void LinesFromMat(Mat *image, TSafeVector *lines); //image must be in grayscale!
+void LinesFromMat(Mat *image, vector<TLine*> *lines); //image must be in grayscale!
 void DrawRect(Mat *image, TSafeVector *rectangles, CvScalar  color); 
 void DrawLines(Mat *image, TSafeVector *lines, CvScalar color);
 

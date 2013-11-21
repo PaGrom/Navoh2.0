@@ -1,6 +1,6 @@
 #include "cvrect.h"
 
-void LinesFromMat(Mat *image, TSafeVector *lines) //image must be in grayscale!
+void LinesFromMat(Mat *image, vector<TLine*> *lines) //image must be in grayscale!
 {
 	
   double *output;
@@ -27,7 +27,7 @@ void LinesFromMat(Mat *image, TSafeVector *lines) //image must be in grayscale!
     double x1=output[7*i+0],x2=output[7*i+2],y1=output[7*i+1],y2=output[7*i+3];
     if(!((abs(x1-x2)+abs(y1-y2))<((image->rows)*(image->cols))/20000))
     {
-    lines->setat(new TLine(x1,y1,x2,y2),k);
+    lines->push_back(new TLine(x1,y1,x2,y2));
     k++;
     }
   }

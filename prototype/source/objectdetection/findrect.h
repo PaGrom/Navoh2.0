@@ -8,12 +8,15 @@
 #include "objectlibs/trectangle.h"
 #include "objectlibs/tsafevector.h"
 #include "rectchecks.h"
+#include <vector>
+
+using namespace std;
 
 void getDXY(TLine *l, float *dx, float *dy, int *x1, int *x2, int *y1, int *y2);
 int isCrossed(TLine &l1, TLine &l2);
 int isParallel(TLine &l1, TLine &l2);
-void findConLine(TSafeVector *all, int li, TPoint *p1, int *resl, int cnt, TSafeVector *res,int n, int cur_i, int maxl);
-void calcRectangles(TSafeVector *linesq, TSafeVector *recsq);
+void findConLine(vector<TLine*> *all, int li, TPoint *p1, int *resl, int cnt, TSafeVector *res,int n, int cur_i, int maxl);
+int calcRectangles(vector<TLine*> *linesq, vector<TRectangle> *recsq);
 void showRectangles(TSafeVector *recsq);
 
 void mergeLines(TSafeVector *original, TSafeVector *merged, double dorient, double dmaxX, double dmaxY);
